@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <title>Ginan Graphical Web Crawler</title>
+    <style type="text/css">
+        #viz {
+            width: 900px;
+            height: 700px;
+            border: 1px solid lightgray;
+            font: 22pt arial;
+        }
+    </style>
+    <script src="https://cdn.neo4jlabs.com/neovis.js/v1.0.0/neovis.js"></script>
+    <script type="text/javascript">
+        var viz;
+        function draw() {
+            var config = {
+                container_id: "viz",
+                server_url: "bolt://52.91.116.38:37657",
+                server_user: "neo4j",
+                server_password: "fingers-customs-drums",
+                labels: {
+                    "Actor": {
+                        "caption": "name",
+                    },
+                    "Movie": {
+                        "caption": "title",
+                    }
+                },
+                relationships: {
+                    "ACTED_IN": {
+                        "thickness": "weight",
+                        "caption": true
+                    }
+                },
+                arrows: true,
+                initial_cypher: "MATCH (a:Actor)-[r:ACTED_IN]->(m:Movie) WHERE a.name CONTAINS 'Reeves' RETURN a,r,m"
+            };
+
+            viz = new NeoVis.default(config);
+            viz.render();
+            console.log(viz)
+        }
+    </script>
+  </head>
+  <body onload="draw()">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">Ginan Web Crawler</a>
+    </nav>
+    <div class="container">
+      <form>
+        <fieldset>
+        <div class="form-group">
+          <label for="exampleInputURL">Starting URL</label>
+          <div class="col-sm-4">
+            <input type="url" class="form-control" id="exampleInputURL" aria-describedby="URLHelp" placeholder="Enter Starting URL">
+          </div>
+          <small id="URLHelp" class="form-text text-muted">Enter the Url for the webpage to start your crawl from</small>
+        </div>
+        </fieldset>
+        <fieldset class="form-group">
+          <label for="crawlLimit">Crawl Limit</label>
+          <div class="col-sm-2">
+            <input type="number" class="form-control" id="crawlLimit" aria-describedby="limitHelp" placeholder="1" min="1" max="10">
+          </div>
+          <small id="limitHelp" class="form-text text-muted">Enter the number of links to crawl betweeen 1 - x </small>
+        </fieldset>
+        <fieldset class="form-group">
+          <legend>Crawl Type</legend>
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                Depth Crawl
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+                Breadth Crawl
+              </label>
+            </div>
+          </div>
+          <small id="crawlTypeHelp" class="form-text text-muted">Choose the type of crawl you would like to perform </small>
+        </fieldset>
+        <fieldset>
+          <button type="submit" class="btn btn-primary">Crawl</button>
+        </fieldset>
+      </form>
+    </div>
+    <div class="container">
+      <div class="jumbotron" id="viz">
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+  </body>
+</html>
