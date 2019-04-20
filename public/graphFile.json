@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    {
+      "name": "URL",
+      "label": "www.startingURL.com",
+      "id": 1
+    },
+    {
+      "name": "URL",
+      "label": "www.link1.com",
+      "id": 2
+    },
+    {
+      "name": "URL",
+      "label": "www.link2.com",
+      "id": 3
+    },
+    {
+      "name": "URL",
+      "label": "www.link3.com",
+      "id": 4
+    }
+  ],
+  "links": [
+    {
+      "source": 1,
+      "target": 2,
+      "type": "Links_To"
+    },
+    {
+      "source": 1,
+      "target": 3,
+      "type": "Links_To"
+    },
+    {
+      "source": 1,
+      "target": 4,
+      "type": "Links_To"
+    }
+  ]
+}
