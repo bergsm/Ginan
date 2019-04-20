@@ -97,7 +97,7 @@
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(width / 2, height / 2));
 
-        d3.json("graphFile.json", function (json) {
+        d3.json("./views/graphFile.json", function (json) {
             force
                 .nodes(json.nodes)
                 .links(json.links)
