@@ -1,23 +1,23 @@
 {
   "nodes": [
     {
-      "name": "Peter",
-      "label": "Person",
+      "name": "URL",
+      "label": "www.startingURL.com",
       "id": 1
     },
     {
-      "name": "Michael",
-      "label": "Person",
+      "name": "URL",
+      "label": "www.link1.com",
       "id": 2
     },
     {
-      "name": "Neo4j",
-      "label": "Database",
+      "name": "URL",
+      "label": "www.link2.com",
       "id": 3
     },
     {
-      "name": "Graph Database",
-      "label": "Database",
+      "name": "URL",
+      "label": "www.link3.com",
       "id": 4
     }
   ],
@@ -25,23 +25,17 @@
     {
       "source": 1,
       "target": 2,
-      "type": "KNOWS",
-      "since": 2010
+      "type": "Links_To",
     },
     {
       "source": 1,
       "target": 3,
-      "type": "FOUNDED"
+      "type": "Links_To"
     },
     {
-      "source": 2,
-      "target": 3,
-      "type": "WORKS_ON"
-    },
-    {
-      "source": 3,
+      "source": 1,
       "target": 4,
-      "type": "IS_A"
+      "type": "Links_To"
     }
   ]
 }
