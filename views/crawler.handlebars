@@ -92,7 +92,7 @@
             .attr("width", width)
             .attr("height", height);
 
-        var force = d3.layout.forceSimulation()
+        var force = d3.forceSimulation()
             .gravity(.05)
             .distance(100)
             .charge(-100)
