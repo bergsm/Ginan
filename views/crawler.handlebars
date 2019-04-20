@@ -93,10 +93,9 @@
             .attr("height", height);
 
         var force = d3.forceSimulation()
-            .gravity(.05)
-            .distance(100)
-            .charge(-100)
-            .size([width, height]);
+            .force("link", d3.forceLink().id(function (d) { return d.id; }).distance(100).strength(1))
+            .force("charge", d3.forceManyBody())
+            .force("center", d3.forceCenter(width / 2, height / 2));
 
         d3.json("graphFile.json", function (json) {
             force
