@@ -99,7 +99,7 @@
             .size([width, height]);
 
         d3.json("graphFile.json", function (json) {
-            force
+            forceSimulation
                 .nodes(json.nodes)
                 .links(json.links)
                 .start();
