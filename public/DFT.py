@@ -1,6 +1,8 @@
 import requests
 import sys
 import random
+from bs4 import BeautifulSoup
+from urlparse import urljoin
 
 
 #Take starting url as argument?
@@ -31,16 +33,27 @@ def writeToFile(urls):
 def parsePage(url):
     #fetch page
     print("Fetching page..")
-    #TODO
-    #r = requests.get(url)
-    #page = r.content
+    #TODO SSL errors are occuring for certain links
+    try:
+        r = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        #TODO pick another link if available
+        print("Error fetching page: " + str(e))
+        return []
+    else:
+        #page = r.text
+        page = r.content
+        print("Parsing..")
+        soup = BeautifulSoup(page, "html.parser")
+        links = []
+        for link in soup.find_all('a'):
+            links.append(urljoin(url, link.get('href')))
 
-    #TODO parse for all links
-    print("Parsing..")
-    #return links as array/list
-    #TODO uncommment these debug links
-    links = ["test1.com", "test2.com", "test3.com"]
-    return links
+        #Debug links
+        #links = ["test1.com", "test2.com", "test3.com"]
+
+        #return links as array/list
+        return links
 
 
 # Function that performs the Depth First Traversal of links for a
@@ -52,14 +65,15 @@ def DFT(url, depth):
     #add url to chain
     urlChain.append(url)
 
-    #base case
-    if depth == 0:
-        #write urlChain to file for graph and exit
-        writeToFile(urlChain)
-        exit(0)
-
     #parse page for all links
     links = parsePage(url)
+
+    #base case
+    if depth == 0 or links == []:
+        #write urlChain to file for graph and exit
+        print("Depth reached or no links on page. Printing results to file..")
+        writeToFile(urlChain)
+        exit(0)
 
     #choose one link at random
     print("Choosing link at random..")

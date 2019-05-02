@@ -1,3 +1,4 @@
 *.log
 startup.sh
 stop.sh
+DFT.json
