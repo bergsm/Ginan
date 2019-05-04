@@ -47,7 +47,7 @@ function update(links, nodes) {
         .append('path')
         .attrs({
             'class': 'edgepath',
-            'fill-opacity': 0,
+            'fill-opacity': 50,
             'stroke-opacity': 0,
             'id': function (d, i) { return 'edgepath' + i }
         })
@@ -97,8 +97,8 @@ function ticked() {
     link
         .attr("x1", function (d) { return d.source.x; })
         .attr("y1", function (d) { return d.source.y; })
-        .attr("x2", function (d) { return (d.target.x -10); })
-        .attr("y2", function (d) { return (d.target.y - 10); });
+        .attr("x2", function (d) { return d.target.x; })
+        .attr("y2", function (d) { return d.target.y; });
     node
         .attr("transform", function (d) { return "translate(" + d.x + ", " + d.y + ")"; });
     edgepaths.attr('d', function (d) {
