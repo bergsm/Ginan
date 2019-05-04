@@ -79,7 +79,7 @@ function update(links, nodes) {
             .on("drag", dragged)
         );
     node.append("circle")
-        .attr("r", 20)
+        .attr("r", 5)
         .style("fill", function (d, i) { return colors(i); })
     node.append("title")
         .text(function (d) { return d.id; });
