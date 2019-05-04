@@ -105,7 +105,7 @@ function ticked() {
         return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
     });
     // recaclulate and back off
-    edgepaths.attr("d", function (d) {
+    link.attr("d", function (d) {
 
         // length of current path
         var pl = this.getTotalLength(),
