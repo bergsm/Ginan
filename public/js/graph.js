@@ -102,23 +102,7 @@ function ticked() {
     node
         .attr("transform", function (d) { return "translate(" + d.x + ", " + d.y + ")"; });
     edgepaths.attr('d', function (d) {
-        return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
-    });
-    // recaclulate and back off
-    edgepaths.attr('d', function (d) {
-
-        // length of current path
-        var pl = this.path.getTotalLength(),
-            // radius of circle plus marker head
-            r = (d.target.weight) * 4 + 16.97, //16.97 is the "size" of the marker Math.sqrt(12**2 + 12 **2)
-            // position close to where path intercepts circle
-            m = this.path.getPointAtLength(pl - r);
-
-        var dx = m.x - d.source.x,
-            dy = m.y - d.source.y,
-            dr = Math.sqrt(dx * dx + dy * dy);
-
-        return 'M ' + d.source.x + "," + d.source.y + ' L ' + dr + ',' + dr + " 0 0,1 " + m.x + "," + m.y;
+        return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y - 10;
     });
     edgelabels.attr('transform', function (d) {
         if (d.target.x < d.source.x) {
