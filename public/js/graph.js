@@ -118,7 +118,7 @@ function ticked() {
             dy = m.y - d.source.y,
             dr = Math.sqrt(dx * dx + dy * dy);
 
-        return "M" + d.source.x + "," + d.source.y + ' L ' + dr + ',' + dr + " 0 0,1 " + m.x + "," + m.y;
+        return 'M ' + d.source.x + "," + d.source.y + ' L ' + dr + ',' + dr + " 0 0,1 " + m.x + "," + m.y;
     });
     edgelabels.attr('transform', function (d) {
         if (d.target.x < d.source.x) {
