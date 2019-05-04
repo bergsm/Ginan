@@ -81,7 +81,6 @@ function update(links, nodes) {
     node.append("circle")
         .attr("r", 20)
         .style("fill", function (d, i) { return colors(i); })
-        .style("opacity", 0.5)
     node.append("title")
         .text(function (d) { return d.id; });
     node.append("text")
