@@ -102,7 +102,7 @@ function ticked() {
     node
         .attr("transform", function (d) { return "translate(" + d.x + ", " + d.y + ")"; });
     edgepaths.attr('d', function (d) {
-        return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
+        return 'M ' + d.source.x + ' ' + (d.source.y - 10) + ' L ' + d.target.x + ' ' + d.target.y;
     });
     edgelabels.attr('transform', function (d) {
         if (d.target.x < d.source.x) {
