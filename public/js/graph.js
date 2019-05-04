@@ -9,7 +9,7 @@
     svg.append('defs').append('marker')
         .attrs({'id': 'arrowhead',
         'viewBox':'-0 -5 10 10',
-        'refX':13,
+        'refX':0,
         'refY':0,
         'orient':'auto',
         'markerWidth':13,
@@ -77,7 +77,7 @@ node = svg.selectAll(".node")
         .on("drag", dragged)
     );
 node.append("circle")
-    .attr("r", 10)
+    .attr("r", 20)
             .style("fill", function (d, i) { return colors(i); })
 node.append("title")
             .text(function (d) { return d.id; });
