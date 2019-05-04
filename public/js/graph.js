@@ -10,7 +10,7 @@ svg.append('defs').append('marker')
     .attrs({
         'id': 'arrowhead',
         'viewBox': '-0 -5 10 10',
-        'refX': 20,
+        'refX': 25,
         'refY': 0,
         'orient': 'auto',
         'markerWidth': 13,
