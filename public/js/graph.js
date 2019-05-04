@@ -47,7 +47,7 @@ function update(links, nodes) {
         .append('path')
         .attrs({
             'class': 'edgepath',
-            'fill-opacity': 50,
+            'fill-opacity': 0,
             'stroke-opacity': 0,
             'id': function (d, i) { return 'edgepath' + i }
         })
@@ -81,6 +81,7 @@ function update(links, nodes) {
     node.append("circle")
         .attr("r", 20)
         .style("fill", function (d, i) { return colors(i); })
+        .style("opacity", 0.5)
     node.append("title")
         .text(function (d) { return d.id; });
     node.append("text")
