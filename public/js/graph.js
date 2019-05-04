@@ -77,7 +77,7 @@ node = svg.selectAll(".node")
         .on("drag", dragged)
     );
 node.append("circle")
-    .attr("r", 20)
+    .attr("r", 10)
             .style("fill", function (d, i) { return colors(i); })
 node.append("title")
             .text(function (d) { return d.id; });
