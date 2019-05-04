@@ -13,8 +13,8 @@ svg.append('defs').append('marker')
         'refX': 0,
         'refY': 0,
         'orient': 'auto',
-        'markerWidth': 13,
-        'markerHeight': 13,
+        'markerWidth': 12,
+        'markerHeight': 12,
         'xoverflow': 'visible'
     })
     .append('svg:path')
@@ -104,6 +104,7 @@ function ticked() {
     edgepaths.attr('d', function (d) {
         return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
     });
+    // recaclulate and back off
     edgepaths.attr("d", function (d) {
 
         // length of current path
@@ -117,7 +118,7 @@ function ticked() {
             dy = m.y - d.source.y,
             dr = Math.sqrt(dx * dx + dy * dy);
 
-        return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + m.x + "," + m.y;
+        return "M" + d.source.x + "," + d.source.y + ' L ' + dr + ',' + dr + " 0 0,1 " + m.x + "," + m.y;
     });
     edgelabels.attr('transform', function (d) {
         if (d.target.x < d.source.x) {
