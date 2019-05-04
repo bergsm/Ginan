@@ -105,14 +105,14 @@ function ticked() {
         return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
     });
     // recaclulate and back off
-    edgepath.attr("d", function (d) {
+    edgepaths.attr("d", function (d) {
 
         // length of current path
-        var pl = this.getTotalLength(),
+        var pl = d.getTotalLength(),
             // radius of circle plus marker head
             r = (d.target.weight) * 4 + 16.97, //16.97 is the "size" of the marker Math.sqrt(12**2 + 12 **2)
             // position close to where path intercepts circle
-            m = this.getPointAtLength(pl - r);
+            m = d.getPointAtLength(pl - r);
 
         var dx = m.x - d.source.x,
             dy = m.y - d.source.y,
