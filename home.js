@@ -7,7 +7,7 @@ app.use(express.static('public'));
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 50500);
+app.set('port', 3030);
 
 app.get('/', function(req,res){
   res.render('crawler');
