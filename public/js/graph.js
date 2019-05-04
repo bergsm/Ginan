@@ -10,11 +10,11 @@ svg.append('defs').append('marker')
     .attrs({
         'id': 'arrowhead',
         'viewBox': '-0 -5 10 10',
-        'refX': 0,
+        'refX': 13,
         'refY': 0,
         'orient': 'auto',
-        'markerWidth': 12,
-        'markerHeight': 12,
+        'markerWidth': 13,
+        'markerHeight': 13,
         'xoverflow': 'visible'
     })
     .append('svg:path')
