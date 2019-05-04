@@ -5,48 +5,55 @@ Adapted from psuedocode in CLRS chapter 22.2, third edition. This function perfo
 '''
 import sys
 import os
-import bs4
 import urllib
 from bs4 import BeautifulSoup
+from urlparse import urljoin
 
-url = "https://oregonstate.edu"
+startingURL = "https://oregonstate.edu"
 #parse the URL
-html = urllib.urlopen(url).read()
+html = urllib.urlopen(startingURL).read()
 #feed the parsed URL to Beautiful Soup
 soup = BeautifulSoup(html, 'html.parser')
 
-startingURL = url
-Neo4jGraph = []
-Neo4jGraph.append(startingURL)
+unvisitedURLs = []
+unvisitedURLs.append(startingURL)
 
-def breadthFirstSearch(Neo4jGraph, startingURL):
+def breadthFirstSearch(unvisitedURLs, startingURL):
 
     observedURLs = []
-    unvisitedURLs = Neo4jGraph
 
     #some debugging checks, did everything make it into the data structure and what is the starting URL
     print "How many unvisited URLs? - ", len(unvisitedURLs)
     print "The starting URL is: " ,startingURL
    
-    #some debugging checks, did everything make it into the data structure and what is the starting URL
-    print len(unvisitedURLs)
-    print startingURL
-
     while len(unvisitedURLs) != 0:
+	
         #get the first URL in the list
-        unvisited = unvisitedURLs.pop() #problem here, can't pop by index, has to be value
-        
-	for links in soup.find_all('a'):
-        	unvisitedURLs.append(links.get('href'))
+        unvisited = unvisitedURLs.pop(0)
+ 
+	#need to get full URL rather than the relative path of every link on the page and add them to the unvisited list. Source for urljoin which 
+	#gets the absolute path: https://stackoverflow.com/questions/44001007/scrape-the-absolute-url-instead-of-a-relative-path-in-python
+	for links in soup.find_all('a',):
+		absoluteURL = urljoin(unvisited, links.get('href'))
+		#if the URL is not already in the unvisted list, add it
+		if absoluteURL not in unvisitedURLs:
+			unvisitedURLs.append(absoluteURL)
 	
+	#add the parsed URL to the observed list
 	observedURLs.append(unvisited)
-	
-	#rip this out later, stuck in an infinite loop because we aren't checking to see if the URL is already in the unvisitedURLs list. This is a bandaid to break out of the infinite loop
-	if len(unvisitedURLs) > 10:
+
+	#this will run indefinitely unless we add a limit. For now, the hard coded limit of number of URLs left to visit is 100
+	if len(unvisitedURLs) > 100:
 		break	
-
+    #debug time
     print "How many observed URLs? - " ,len(observedURLs)
-    print "The list of observed URLs: ", observedURLs
+    #print the list in a readable format to help with debugging    
+    print "The list of observed URLs: ", 
+    for x in observedURLs:
+	print x
+    #print the list in a readable format to help with debugging
+    print "\n\nThe list of unvisited URLs: "
+    for y in unvisitedURLs:
+	print y
 
-    print "The list of unvisited URLs: ", unvisitedURLs	
-breadthFirstSearch(Neo4jGraph, startingURL)
+breadthFirstSearch(unvisitedURLs, startingURL)
