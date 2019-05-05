@@ -28,9 +28,8 @@ app.use(function(err, req, res, next){
 });
 
 app.post('/', function (req, res) {
-    console.log(req.body.data.inputURL);
-    console.log(req.body.data.crawlLimit);
-    console.log(req.body.data.optionsRadios);
+    consloe.log("Should Show shit below");
+    console.log(req.body);
     res.render('crawler');
 });
 
