@@ -33,7 +33,7 @@ app.post('/form-data', function (req, res) {
     console.log(qParams);
     console.log(req.body);
     var context = {};
-    context.dataList = qParams;
+    context.form = qParams;
     context.reqType = "POST";
     res.render('form-data', context);
 });
