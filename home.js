@@ -4,6 +4,7 @@ var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 app.use(express.static('public'));
+app.use(bodyParser.json());
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -26,16 +27,10 @@ app.use(function(err, req, res, next){
 });
 
 app.post('/form-data', function (req, res) {
-    var qParams = [];
-    for (var p in req.body) {
-        qParams.push({ 'name': p, 'value': req.body[p] })
-    }
-    console.log(qParams);
-    console.log(req.body);
-    var context = {};
-    context.form = qParams;
-    context.reqType = "POST";
-    res.render('form-data', context);
+    console.log(req.body.data.inputURL)
+    console.log(req.body.data.crawlLimit)
+    console.log(req.body.data.optionsRadios)
+
 });
 
 
