@@ -27,7 +27,7 @@ app.use(function(err, req, res, next){
 	res.render('500');
 });
 
-app.post('/test', function(req,res) {
+app.post('/test', (req,res) => {
     consloe.log("Should Show shit below");
     console.log(req.body);
     res.send("recieved your request!");
