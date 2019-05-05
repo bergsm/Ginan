@@ -27,7 +27,7 @@ app.use(function(err, req, res, next){
 	res.render('500');
 });
 
-app.post('/views/test', function (req, res) {
+app.post('/test', function (req, res) {
     console.log(err);
     consloe.log("Should Show shit below");
     console.log(req.body);
