@@ -26,8 +26,18 @@ app.use(function(err, req, res, next){
 });
 
 app.post('/form-data', function (req, res) {
+    var qParams = [];
+    for (var p in req.body) {
+        qParams.push({ 'name': p, 'value': req.body[p] })
+    }
+    console.log(qParams);
     console.log(req.body);
-    res.render('form-data', {req: req.body});
+    var context = {};
+    context.dataList = qParams;
+    context.reqType = "POST";
+    res.render('form-data', context);
+});
+
 });
 
 
