@@ -28,7 +28,6 @@ app.use(function(err, req, res, next){
 });
 
 app.post('/test', function (req, res) {
-    console.log(err);
     consloe.log("Should Show shit below");
     console.log(req.body);
     res.send("recieved your request!");
