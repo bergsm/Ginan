@@ -27,6 +27,7 @@ app.use(function(err, req, res, next){
 
 app.post('/form-data', function (req, res) {
     console.log(req.body);
+    res.render('form', { req: req.body });
 });
 
 
