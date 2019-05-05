@@ -15,6 +15,12 @@ app.get('/', function(req,res){
   res.render('crawler');
 });
 
+app.post('test', function (req, res) {
+    consloe.log("Should Show shit below");
+    console.log(req.body);
+    res.send("recieved your request!");
+});
+
 app.use(function(req,res){
 	res.status(404);
 	res.render('404');
