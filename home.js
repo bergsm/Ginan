@@ -27,7 +27,7 @@ app.use(function(err, req, res, next){
 	res.render('500');
 });
 
-app.post('http://flip3.engr.oregonstate.edu:50500/crawler', function (req,res) {
+app.post('/', function (req,res) {
     consloe.log("Should Show shit below");
     console.log(req.body);
     res.render('crawler');
