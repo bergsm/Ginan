@@ -6,6 +6,7 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.multipart());
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
