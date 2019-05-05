@@ -27,7 +27,7 @@ app.use(function(err, req, res, next){
 	res.render('500');
 });
 
-app.post('/form-data', function (req, res) {
+app.post('/', function (req, res) {
     console.log(req.body.data.inputURL)
     console.log(req.body.data.crawlLimit)
     console.log(req.body.data.optionsRadios)
