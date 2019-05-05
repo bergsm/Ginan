@@ -27,7 +27,7 @@ app.use(function(err, req, res, next){
 	res.render('500');
 });
 
-app.post('/', function (req, res) {
+app.post('/crawler', function (req,res) {
     consloe.log("Should Show shit below");
     console.log(req.body);
     res.render('crawler');
