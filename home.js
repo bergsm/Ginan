@@ -25,6 +25,10 @@ app.use(function(err, req, res, next){
 	res.render('500');
 });
 
+app.post('/form-data', function (req, res) {
+    console.log(req.body);
+});
+
 
 
 app.listen(app.get('port'), function(){

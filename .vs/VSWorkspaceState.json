@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public",
-    "\\views",
-    "\\views\\layouts"
+    "\\public"
   ],
-  "SelectedNode": "\\views\\crawler.handlebars",
+  "SelectedNode": "\\home.js",
   "PreviewInSolutionExplorer": false
 }
