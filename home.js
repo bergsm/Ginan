@@ -28,10 +28,10 @@ app.use(function(err, req, res, next){
 });
 
 app.post('/', function (req, res) {
-    console.log(req.body.data.inputURL)
-    console.log(req.body.data.crawlLimit)
-    console.log(req.body.data.optionsRadios)
-
+    console.log(req.body.data.inputURL);
+    console.log(req.body.data.crawlLimit);
+    console.log(req.body.data.optionsRadios);
+    res.render('crawler');
 });
 
 
