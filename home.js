@@ -1,11 +1,11 @@
 var express = require('express');
-
+var bodyParser = require('body-parser');
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -27,7 +27,7 @@ app.use(function(err, req, res, next){
 	res.render('500');
 });
 
-app.post('/', function (req,res) {
+app.post('/', function(req,res) {
     consloe.log("Should Show shit below");
     console.log(req.body);
     res.send("recieved your request!");
