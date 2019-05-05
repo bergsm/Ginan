@@ -4,7 +4,7 @@ var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 app.use(express.static('public'));
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.engine('handlebars', handlebars.engine);
@@ -27,7 +27,7 @@ app.use(function(err, req, res, next){
 	res.render('500');
 });
 
-app.post('/crawler', function (req, res) {
+app.post('/', function (req, res) {
     console.log(req.body.data.inputURL);
     console.log(req.body.data.crawlLimit);
     console.log(req.body.data.optionsRadios);
