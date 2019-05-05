@@ -15,7 +15,7 @@ app.get('/', function(req,res){
   res.render('crawler');
 });
 
-app.post('test', function (req, res) {
+app.post('test-page', function (req, res) {
     consloe.log("Should Show shit below");
     console.log(req.body);
     res.send("recieved your request!");
@@ -33,11 +33,7 @@ app.use(function(err, req, res, next){
 	res.render('500');
 });
 
-app.post('test-page', function (req, res) {
-    consloe.log("Should Show shit below");
-    console.log(req.body);
-    res.send("recieved your request!");
-});
+
 
 
 
