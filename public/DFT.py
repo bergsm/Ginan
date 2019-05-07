@@ -41,7 +41,6 @@ def parsePage(url):
         print("Error fetching page: " + str(e))
         return []
     else:
-        #page = r.text
         page = r.content
         print("Parsing..")
         soup = BeautifulSoup(page, "html.parser")
