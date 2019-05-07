@@ -15,8 +15,8 @@ app.get('/', function(req,res){
   res.render('crawler');
 });
 
-app.post('test-page', function (req, res) {
-    consloe.log("Should Show shit below");
+app.post('/test-page', function (req, res) {
+    console.log("Should Show shit below");
     console.log(req.body);
     res.send("recieved your request!");
 });
