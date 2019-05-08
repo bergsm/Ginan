@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\public",
-    "\\views",
-    "\\views\\layouts"
+    "\\views"
   ],
-  "SelectedNode": "\\views\\crawler.handlebars",
+  "SelectedNode": "\\public\\graphFile.json",
   "PreviewInSolutionExplorer": false
 }
