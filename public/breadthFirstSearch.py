@@ -9,7 +9,7 @@ import urllib
 from bs4 import BeautifulSoup
 from urlparse import urljoin
 
-startingURL = "https://oregonstate.edu"
+startingURL = "https://red.com"
 #parse the URL
 html = urllib.urlopen(startingURL).read()
 #feed the parsed URL to Beautiful Soup
