@@ -1,13 +1,13 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var multer = require('multer'); 
+//var multer = require('multer'); 
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(multer());
+//app.use(multer());
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
