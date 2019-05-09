@@ -61,7 +61,11 @@
             url: "/test-page",
             type: "POST",
             dataType: 'json',
-            data: JSON.stringify($('#inputURL')),
+            data: JSON.stringify({
+                starting_url: $('#inputURL').val(),
+                crawl_limit: $('#crawlLimit').val(),
+                search_type: $('#searchType').val()
+            }),
             contentType: "application/json;charset=UTF-8",
             cache: false,
             timeout: 5000,
