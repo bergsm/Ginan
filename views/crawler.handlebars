@@ -54,3 +54,34 @@
 <script src="https://d3js.org/d3.v4.min.js" type="text/javascript"></script>
 <script src="http://d3js.org/d3-selection-multi.v1.js"></script>
 <script src="/js/graph.js"></script>
+<script type="text/javascript">
+    $('#submitButton').click(function () {
+        alert('clicked')
+        $.ajax({
+            url: "/test-page",
+            type: "POST",
+            dataType: "json",
+            data: {
+                starting_url: $('#inputURL').val(),
+                crawl_limit: $('#crawlLimit').val(),
+                search_type: $('#searchType').val()
+            },
+            contentType: "application/json",
+            cache: false,
+            timeout: 5000,
+            complete: function () {
+                //called when complete
+                console.log('process complete');
+            },
+
+            success: function (data) {
+                console.log(data);
+                console.log('process sucess');
+            },
+
+            error: function () {
+                console.log('process error');
+            },
+        });
+    });
+</script>
