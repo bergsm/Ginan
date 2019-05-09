@@ -1,64 +1,64 @@
 ﻿<!doctype html>
 <html>
-    <head>
-        <script  type="text/javascript">
-            document.addEventListener('DOMContentLoaded', test_post);
-            function test_post() {
-                alert('clicked')
-                $.ajax({
-                    url: "/test-page",
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        starting_url: $('#inputURL').val(),
-                        crawl_limit: $('#crawlLimit').val(),
-                        search_type: $('#searchType').val()
-                    },
-                    contentType: "application/json",
-                    cache: false,
-                    timeout: 5000,
-                    complete: function () {
-                        //called when complete
-                        console.log('process complete');
-                    },
+<head>
+    <script type="text/javascript">
+        $('#submitButton').click(function () {
+            alert('clicked')
+            $.ajax({
+                url: "/test-page",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    starting_url: $('#inputURL').val(),
+                    crawl_limit: $('#crawlLimit').val(),
+                    search_type: $('#searchType').val()
+                },
+                contentType: "application/json",
+                cache: false,
+                timeout: 5000,
+                complete: function () {
+                    //called when complete
+                    console.log('process complete');
+                },
 
-                    success: function (data) {
-                        console.log(data);
-                        console.log('process sucess');
-                    },
+                success: function (data) {
+                    console.log(data);
+                    console.log('process sucess');
+                },
 
-                    error: function () {
-                        console.log('process error');
-                    },
-                });
-            }</script>
-        <title>{{{title}}}</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                error: function () {
+                    console.log('process error');
+                },
+            });
+        });
+    </script>
+    <title>{{{title}}}</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
-        <title>Ginan Graphical Web Crawler</title>
-        <style type="text/css">
-            .link {
-                stroke: #aaa;
-            }
+    <title>Ginan Graphical Web Crawler</title>
+    <style type="text/css">
+        .link {
+            stroke: #aaa;
+        }
 
-            .node text {
-                stroke: #333;
-                cursos: pointer;
-            }
+        .node text {
+            stroke: #333;
+            cursos: pointer;
+        }
 
-            .node circle {
-                stroke: #fff;
-                stroke-width: 3px;
-                fill: #555;
-            }
-        </style>
+        .node circle {
+            stroke: #fff;
+            stroke-width: 3px;
+            fill: #555;
+        }
+    </style>
 
-    </head>
+</head>
     <body>
         <div class="mainText">
             {{{body}}}
