@@ -61,7 +61,7 @@
             url: "/test-page",
             type: "POST",
             dataType: 'json',
-            data: $('form').serialize(),
+            data: JSON.stringify(form),
             contentType: "application/json;charset=UTF-8",
             cache: false,
             timeout: 5000,
