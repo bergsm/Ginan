@@ -6,7 +6,7 @@
             function test_post() {
                 document.getElementById('form').addEventListener('click', function (event) {
                     var req = new XMLHttpRequest();
-                    var url = '/';
+                    var url = '/test-page';
                     console.log(url);
                     req.open('POST', url, true);
                     req.addEventListener('load', function () {
