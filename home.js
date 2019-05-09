@@ -1,13 +1,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-//var multer = require('multer'); 
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(multer());
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -34,10 +32,6 @@ app.use(function(err, req, res, next){
 	res.status(500);
 	res.render('500');
 });
-
-
-
-
 
 app.listen(app.get('port'), function(){
 	console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
