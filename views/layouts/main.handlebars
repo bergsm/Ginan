@@ -11,8 +11,8 @@
                     req.open('POST', url, true);
                     req.addEventListener('load', function () {
                         if (req.status >= 200 && req.status < 400) {
-                            var response = JSON.parse(req.responseText);
-                            console.log(response);
+                            var response = JSON.parse(req.body);
+                            console.log("Response: " + response);
                             res.send(response);
                         } else {
                             console.log("Error in network request: " + req.statusText);
