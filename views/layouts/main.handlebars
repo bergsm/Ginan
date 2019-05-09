@@ -7,7 +7,8 @@
                 document.getElementById('submitButton').addEventListener('click', function (event) {
                     var req = new XMLHttpRequest();
                     var url = '/test-page';
-                    console.log("URL" + url);
+                    console.log("URL: " + url);
+                    console.log("Req Body: " + req.body)
                     req.open('POST', url, true);
                     req.addEventListener('load', function () {
                         console.log(req.status);
