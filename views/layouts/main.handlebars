@@ -1,38 +1,57 @@
 ﻿<!doctype html>
 <html>
-    <div class="site">
-        <head>
-            <title>{{{title}}}</title>
-            <!-- Required meta tags -->
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <script  type="text/javascript">
+            document.addEventListener('DOMContentLoaded', test_post);
+            function test_post() {
+                document.getElementById('form').addEventListener('click', function (event) {
+                    var req = new XMLHttpRequest();
+                    var url = 'http://flip3.engr.oregonstate.edu:50500/';
+                    console.log(url);
+                    req.open('POST', url, true);
+                    req.addEventListener('load', function () {
+                        if (req.status >= 200 && req.status < 400) {
+                            var response = JSON.parse(req.responseText);
+                            console.log(req.body);
+                            res.send("recieved your request!");
+                        } else {
+                            console.log("Error in network request: " + req.statusText);
+                        }
+                    });
+                    req.send(null);
+                    event.preventDefault();
+                });
+            }</script>
+        <title>{{{title}}}</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            <!-- Bootstrap CSS -->
-            <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
 
-            <title>Ginan Graphical Web Crawler</title>
-            <style type="text/css">
-                .link {
-                    stroke: #aaa;
-                }
+        <title>Ginan Graphical Web Crawler</title>
+        <style type="text/css">
+            .link {
+                stroke: #aaa;
+            }
 
-                .node text {
-                    stroke: #333;
-                    cursos: pointer;
-                }
+            .node text {
+                stroke: #333;
+                cursos: pointer;
+            }
 
-                .node circle {
-                    stroke: #fff;
-                    stroke-width: 3px;
-                    fill: #555;
-                }
-            </style>
+            .node circle {
+                stroke: #fff;
+                stroke-width: 3px;
+                fill: #555;
+            }
+        </style>
 
-        </head>
-        <body>
-            <div class="mainText">
-	            {{{body}}}
-            </div>
-        </body>
-    </div>
+    </head>
+    <body>
+        <div class="mainText">
+            {{{body}}}
+        </div>
+    </body>
 </html>
