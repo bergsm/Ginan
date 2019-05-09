@@ -12,13 +12,13 @@
                     req.addEventListener('load', function () {
                         if (req.status >= 200 && req.status < 400) {
                             var response = JSON.parse(req.responseText);
-                            console.log(req.body);
-                            res.send("recieved your request!");
+                            console.log(response);
+                            res.send(response);
                         } else {
                             console.log("Error in network request: " + req.statusText);
                         }
                     });
-                    req.send(null);
+                    //req.send(null);
                     event.preventDefault();
                 });
             }</script>
