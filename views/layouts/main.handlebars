@@ -10,6 +10,7 @@
                     console.log(url);
                     req.open('POST', url, true);
                     req.addEventListener('load', function () {
+                        console.log(req.status);
                         if (req.status >= 200 && req.status < 400) {
                             var response = JSON.parse(req.body);
                             console.log("Response: " + response);
