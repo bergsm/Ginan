@@ -60,12 +60,8 @@
         $.ajax({
             url: "/test-page",
             type: "POST",
-            dataType: "json",
-            data: {
-                starting_url: $("#inputURL").val(),
-                crawl_limit: $("#crawlLimit").val(),
-                search_type: $("#searchType").val()
-            },
+            dataType: 'json',
+            data: formToJson($("form")),
             contentType: "application/json",
             cache: false,
             timeout: 5000,
