@@ -20,18 +20,18 @@
             </div>
             <small id="limitHelp" class="form-text text-muted">Enter the number of links to crawl betweeen 1 - x </small>
         </fieldset>
-        <fieldset class="form-group" id="searchType">
+        <fieldset class="form-group" >
             <legend>Crawl Type</legend>
             <div class="col-sm-3">
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="data[searchType]" value="DFS" checked="">
+                        <input type="radio" class="form-check-input" name="data[searchType]" id="searchType" value="DFS" checked="">
                         Depth Crawl
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="data[searchType]" value="BFS">
+                        <input type="radio" class="form-check-input" name="data[searchType]" id="searchType" value="BFS">
                         Breadth Crawl
                     </label>
                 </div>
@@ -64,7 +64,7 @@
             data: JSON.stringify({
                 starting_url: $('#inputURL').val(),
                 crawl_limit: $('#crawlLimit').val(),
-                search_type: $('#searchType').val()
+                search_type: $("input[name='data[searchType]']:checked").val()
             }),
             contentType: "application/json;charset=UTF-8",
             cache: false,
