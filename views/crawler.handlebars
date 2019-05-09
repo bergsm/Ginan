@@ -6,7 +6,7 @@
     <form id="form">
         <fieldset>
             <div class="form-group">
-                <label for="exampleInputURL">Starting URL</label>
+                <label for="inputUrl">Starting URL</label>
                 <div class="col-sm-4">
                     <input type="url" class="form-control" id="inputURL" name="data[inputURL]" aria-describedby="URLHelp" placeholder="Enter Starting URL" required>
                 </div>
@@ -20,7 +20,7 @@
             </div>
             <small id="limitHelp" class="form-text text-muted">Enter the number of links to crawl betweeen 1 - x </small>
         </fieldset>
-        <fieldset class="form-group">
+        <fieldset class="form-group" id="searchType">
             <legend>Crawl Type</legend>
             <div class="col-sm-3">
                 <div class="form-check">

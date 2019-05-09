@@ -4,24 +4,32 @@
         <script  type="text/javascript">
             document.addEventListener('DOMContentLoaded', test_post);
             function test_post() {
-                document.getElementById('submitButton').addEventListener('click', function (event) {
-                    var req = new XMLHttpRequest();
-                    var url = '/test-page';
-                    console.log("URL: " + url);
-                    console.log("Req Body: " + req.body)
-                    req.open('POST', url, true);
-                    req.addEventListener('load', function () {
-                        console.log(req.status);
-                        if (req.status >= 200 && req.status < 400) {
-                            var response = JSON.parse(req.body);
-                            console.log("Response: " + response);
-                            res.send(response);
-                        } else {
-                            console.log("Error in network request: " + req.statusText);
-                        }
-                    });
-                    //req.send(null);
-                    event.preventDefault();
+                alert('clicked')
+                $.ajax({
+                    url: "/test-page",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        starting_url: $('#inputURL').val(),
+                        crawl_limit: $('#crawlLimit').val(),
+                        search_type: $('#searchType').val()
+                    },
+                    contentType: "application/json",
+                    cache: false,
+                    timeout: 5000,
+                    complete: function () {
+                        //called when complete
+                        console.log('process complete');
+                    },
+
+                    success: function (data) {
+                        console.log(data);
+                        console.log('process sucess');
+                    },
+
+                    error: function () {
+                        console.log('process error');
+                    },
                 });
             }</script>
         <title>{{{title}}}</title>

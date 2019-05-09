@@ -18,7 +18,7 @@ app.get('/', function(req,res){
 app.post('/test-page', function (req, res) {
     console.log("Should Show shit below");
     console.log(req.body);
-    res.send("recieved your request!");
+    res.send(req.body);
 });
 
 app.use(function(req,res){
