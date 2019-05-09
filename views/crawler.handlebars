@@ -61,7 +61,7 @@
             url: "/test-page",
             type: "POST",
             dataType: 'json',
-            data: formToJson($("form")),
+            data: $('form').serialize(),
             contentType: "application/json",
             cache: false,
             timeout: 5000,
