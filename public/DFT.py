@@ -25,15 +25,15 @@ def writeToFile(urls):
     with open('DFT.json', 'w+') as f:
         f.write('{\n  \"nodes\": [')
         for counter, url in enumerate(urls):
-            f.write('\n  {\n "name\": \"URL\",\n "label\": \"' + url + '\",\n "id\":' +  str(counter+1) + '\n }')
-            if counter < len(urls):
+            f.write('\n    {\n      "name\": \"URL\",\n      "label\": \"' + url + '\",\n       "id\":' +  str(counter+1) + '\n    }')
+            if counter < len(urls)-1:
                 f.write(',')
         f.write('\n  ],\n  \"links\": [')
         for i in range(1, len(urls)):
-            f.write('\n  {\n  \"source\": ' + str(i) + ',\n  \"target\": ' + str(i+1) + ',\n  \"type\": \"Links_To\"\n}')
-            if i < len(urls):
+            f.write('\n    {\n      \"source\": ' + str(i) + ',\n      \"target\": ' + str(i+1) + ',\n      \"type\": \"Links_To\"\n    }')
+            if i < len(urls)-1:
                 f.write(',')
-        f.write('\n  \n}')
+        f.write('\n  ]\n}')
 
 
 
