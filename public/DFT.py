@@ -22,7 +22,7 @@ urlChain = []
 # Args: urls in order from DFS
 # Returns: None
 def writeToFile(urls):
-    with open('graphFile.json', 'w+') as f:
+    with open('./public/graphFile.json', 'w+') as f:
         f.write('{\n  \"nodes\": [')
         for counter, url in enumerate(urls):
             f.write('\n    {\n      "name\": \"URL\",\n      "label\": \"' + url + '\",\n       "id\":' +  str(counter+1) + '\n    }')
