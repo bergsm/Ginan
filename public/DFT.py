@@ -22,7 +22,7 @@ urlChain = []
 # Args: urls in order from DFS
 # Returns: None
 def writeToFile(urls):
-    with open('DFT.json', 'w+') as f:
+    with open('graphFile.json', 'w+') as f:
         f.write('{\n  \"nodes\": [')
         for counter, url in enumerate(urls):
             f.write('\n    {\n      "name\": \"URL\",\n      "label\": \"' + url + '\",\n       "id\":' +  str(counter+1) + '\n    }')
@@ -80,7 +80,7 @@ def DFT(url, depth):
     #base case
     if depth == 0 or links == []:
         #write urlChain to file for graph and exit
-        print("Depth reached or no links on page. Printing results to file..")
+        print("Depth reached, no links on page, or url format incorrect. Generating results..")
         writeToFile(urlChain)
         exit(0)
 
