@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
-const spawn = require("child_process").spawn;
+const spawn = require("child_process").spawnSync;
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -13,6 +13,7 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', 3030);
 
+
 app.get('/', function(req,res){
   res.render('crawler');
 });
@@ -20,11 +21,11 @@ app.get('/', function(req,res){
 app.post('/test-page', function (req, res) {
     console.log("Should Show shit below");
     console.log(req.body);
-    res.send(req.body);
-    const pythonProcess = spawn('python',["./public/DFT.py", req.body.starting_url, req.body.crawl_limit]);
-    pythonProcess.stdout.on('data', function(data) {
-        console.log(data.toString());
-    });
+    //res.send(req.body);
+    if (req.body.search_type == 'DFS') {
+        const pythonProcess = spawn('python',["./public/DFT.py", req.body.starting_url, req.body.crawl_limit]);
+        res.render('crawler');
+    }
 });
 
 app.use(function(req,res){
