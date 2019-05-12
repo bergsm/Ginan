@@ -1,0 +1,51 @@
+{
+  "nodes": [
+    {
+      "name": "URL",
+      "label": "http://www.apple.com",
+       "id":1
+    },
+    {
+      "name": "URL",
+      "label": "http://www.apple.com#ac-gn-menustate",
+       "id":2
+    },
+    {
+      "name": "URL",
+      "label": "http://www.apple.com",
+       "id":3
+    },
+    {
+      "name": "URL",
+      "label": "http://www.apple.com/",
+       "id":4
+    },
+    {
+      "name": "URL",
+      "label": "http://www.apple.com/us/shop/goto/bag",
+       "id":5
+    }
+  ],
+  "links": [
+    {
+      "source": 1,
+      "target": 2,
+      "type": "Links_To"
+    },
+    {
+      "source": 2,
+      "target": 3,
+      "type": "Links_To"
+    },
+    {
+      "source": 3,
+      "target": 4,
+      "type": "Links_To"
+    },
+    {
+      "source": 4,
+      "target": 5,
+      "type": "Links_To"
+    }
+  ]
+}

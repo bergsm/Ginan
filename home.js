@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 3030);
+app.set('port', 30300);
 
 
 app.get('/', function(req,res){
@@ -23,8 +23,14 @@ app.post('/test-page', function (req, res) {
     console.log(req.body);
     //res.send(req.body);
     if (req.body.search_type == 'DFS') {
-        const pythonProcess = spawn('python',["./public/DFT.py", req.body.starting_url, req.body.crawl_limit]);
+        const pythonProcess = spawn('python',["./public/DFS.py", req.body.starting_url, req.body.crawl_limit]);
         res.render('crawler');
+    }
+    else {
+	console.log("hi from BFS");
+	const pythonProcess = spawn('python',["./public/breadthFirstSearch.py", req.body.starting_url, req.body.crawl_limit]) >> console.log();
+		//console.log("hi from BFS");
+	res.render('crawler');
     }
 });
 

@@ -9,7 +9,9 @@ import urllib
 from bs4 import BeautifulSoup
 from urlparse import urljoin
 
-startingURL = "https://red.com"
+startingURL = sys.argv[1]
+depth = int(sys.argv[2])
+
 #parse the URL
 html = urllib.urlopen(startingURL).read()
 #feed the parsed URL to Beautiful Soup
@@ -18,8 +20,26 @@ soup = BeautifulSoup(html, 'html.parser')
 unvisitedURLs = []
 unvisitedURLs.append(startingURL)
 
-def breadthFirstSearch(unvisitedURLs, startingURL):
+# The following write function was written by Shawn Berg, all credit to him for this
+# Function to write urls from DFS to json file
+# Args: urls in order from DFS
+# Returns: None
+def writeToFile(urls):
+    with open('graphFile.json', 'w+') as f:
+        f.write('{\n  \"nodes\": [')
+        for counter, url in enumerate(urls):
+            f.write('\n    {\n      "name\": \"URL\",\n      "label\": \"' + url + '\",\n       "id\":' +  str(counter+1) + '\n    }')
+            if counter < len(urls)-1:
+                f.write(',')
+        f.write('\n  ],\n  \"links\": [')
+        for i in range(1, len(urls)):
+            f.write('\n    {\n      \"source\": ' + str(i) + ',\n      \"target\": ' + str(i+1) + ',\n      \"type\": \"Links_To\"\n    }')
+            if i < len(urls)-1:
+                f.write(',')
+        f.write('\n  ]\n}')
 
+def breadthFirstSearch(startingURL, depth):
+  
     observedURLs = []
 
     #some debugging checks, did everything make it into the data structure and what is the starting URL
@@ -30,25 +50,30 @@ def breadthFirstSearch(unvisitedURLs, startingURL):
 	
         #get the first URL in the list
         unvisited = unvisitedURLs.pop(0)
- 
+ 	
+	#print "just finished the pop"
 	#need to get full URL rather than the relative path of every link on the page and add them to the unvisited list. Source for urljoin which 
 	#gets the absolute path: https://stackoverflow.com/questions/44001007/scrape-the-absolute-url-instead-of-a-relative-path-in-python
 	for links in soup.find_all('a',):
+		#print "entered the loop looking for links"
 		absoluteURL = urljoin(unvisited, links.get('href'))
 		#if the URL is not already in the unvisted list, add it
 		if absoluteURL not in unvisitedURLs:
 			unvisitedURLs.append(absoluteURL)
+			#print "appended a new URL"
 	
 	#add the parsed URL to the observed list
 	observedURLs.append(unvisited)
 
-	#this will run indefinitely unless we add a limit. For now, the hard coded limit of number of URLs left to visit is 100
+	#this will run indefinitely unless we add a limit. For now, the hard coded limit of number of URLs left to visit is 2000
 	if len(unvisitedURLs) > 100:
+		print "unvisited > 100"
 		break	
     #debug time
     print "How many observed URLs? - " ,len(observedURLs)
     #print the list in a readable format to help with debugging    
-    print "The list of observed URLs: ", 
+    print "The list of observed URLs: "
+    writeToFile(observedURLs)
     for x in observedURLs:
 	print x
     #print the list in a readable format to help with debugging
@@ -56,4 +81,4 @@ def breadthFirstSearch(unvisitedURLs, startingURL):
     for y in unvisitedURLs:
 	print y
 
-breadthFirstSearch(unvisitedURLs, startingURL)
+breadthFirstSearch(startingURL, depth)
