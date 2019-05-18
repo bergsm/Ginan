@@ -19,9 +19,7 @@ app.get('/', function(req,res){
 });
 
 app.post('/test-page', function (req, res) {
-    console.log("Should Show shit below");
     console.log(req.body);
-    //res.send(req.body);
     if (req.body.search_type == 'DFS') {
         const pythonProcess = spawn('python',["./public/DFT.py", req.body.starting_url, req.body.crawl_limit]);
         res.render('crawler');
