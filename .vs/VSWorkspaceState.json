@@ -2,7 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\public",
-    "\\public\\js"
+    "\\public\\js",
+    "\\views",
+    "\\views\\layouts"
   ],
   "SelectedNode": "\\home.js",
   "PreviewInSolutionExplorer": false
