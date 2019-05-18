@@ -9,7 +9,7 @@ var svg = d3.select("svg"),
 svg.append('defs').append('marker')
     .attrs({
         'id': 'arrowhead',
-        'viewBox': '0 0 900 600',
+        'viewBox': '0 0 10 10',
         'refX': 25,
         'refY': 0,
         'orient': 'auto',
