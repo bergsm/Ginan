@@ -64,17 +64,6 @@ def parsePage(url, links):
             url = links[randNum]
             return parsePage(url, links)
     else:
-        #page = r.content
-        #print("Parsing..")
-        #soup = BeautifulSoup(page, "html.parser")
-        #links = []
-        #for link in soup.find_all('a'):
-        #    links.append(urljoin(url, link.get('href')))
-
-        #Debug links
-        #links = ["test1.com", "test2.com", "test3.com"]
-
-        #return links as array/list
         return links
 
 
