@@ -7,7 +7,8 @@ $('#submitButton').click(function () {
         data: JSON.stringify({
             starting_url: $('#inputURL').val(),
             crawl_limit: $('#crawlLimit').val(),
-            search_type: $("input[name='data[searchType]']:checked").val()
+            search_type: $("input[name='data[searchType]']:checked").val(),
+	    //keyword: $('#keywordInput').val()
         }),
         contentType: "application/json;charset=UTF-8",
         cache: false,
