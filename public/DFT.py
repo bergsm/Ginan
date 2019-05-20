@@ -61,7 +61,6 @@ def parsePage(url, links):
         else:
             print("Choosing a different link..")
             randNum = random.randint(0, len(links)-1)
-            #TODO remove link from list?
             url = links[randNum]
             del links[randNum]
             return parsePage(url, links)
