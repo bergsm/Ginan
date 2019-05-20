@@ -15,3 +15,5 @@ Website should be reachable at localhost:3030 if startup was successful.
 To exit the Python virtual environment: type "deactivate" into the terminal
 
 Documentation used for the virtual environment: https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
+
+To install python dependencies use "pip install -r requirements.txt"
