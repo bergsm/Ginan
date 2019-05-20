@@ -63,6 +63,7 @@ def parsePage(url, links):
             randNum = random.randint(0, len(links)-1)
             #TODO remove link from list?
             url = links[randNum]
+            del links[randNum]
             return parsePage(url, links)
     else:
         return links
@@ -90,8 +91,8 @@ def DFT(url, depth, links):
     #choose one link at random
     print("Choosing link at random..")
     randNum = random.randint(0, len(links)-1)
-    #TODO remove link from list?
     url = links[randNum]
+    del links[randNum]
     print("Random url is: " + url)
 
     #decrement and recurse
