@@ -2,3 +2,5 @@
 startup.sh
 stop.sh
 DFT.json
+env
+*.bak
