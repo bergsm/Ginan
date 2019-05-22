@@ -31,7 +31,7 @@ var simulation = d3.forceSimulation()
 $.cookie('graph_session', 'graphfile.json');
 
 if ($.cookie('graph_session')) {
-    d3.json($.cookie('graph-session'), function (error, graph) {
+    d3.json("graphFile.json", function (error, graph) {
         if (error) throw error;
         update(graph.links, graph.nodes);
    
