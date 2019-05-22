@@ -28,7 +28,7 @@ var simulation = d3.forceSimulation()
     .force("center", d3.forceCenter(width / 2, height / 2));
 
 // if the file exsts create a var from the json file data
-if (graphfile.json) {
+if (graphFile.json) {
     var graphdata = JSON.parse(graphFile.json);
 }
 //Create a cookie test using the variable
