@@ -27,8 +27,12 @@ var simulation = d3.forceSimulation()
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2));
 
-//Create a cookie test
-$.cookie('graph_session', JSON.parse(graphFile.json));
+// if the file exsts create a var from the json file data
+if (graphfile.json) {
+    var graphdata = JSON.parse(graphFile.json);
+}
+//Create a cookie test using the variable
+$.cookie('graph_session', graphdata);
 
 console.log($.cookie('graph_session'));
 
