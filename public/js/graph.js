@@ -28,7 +28,7 @@ var simulation = d3.forceSimulation()
     .force("center", d3.forceCenter(width / 2, height / 2));
 
 //Create a cookie test
-$.cookie('graph_session', JSON.stringify(graphFile.json));
+$.cookie('graph_session', JSON.parse(graphFile.json));
 
 console.log($.cookie('graph_session'));
 
