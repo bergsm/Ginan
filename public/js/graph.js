@@ -30,6 +30,8 @@ var simulation = d3.forceSimulation()
 //Create a cookie test
 $.cookie('graph_session', 'graphfile.json');
 
+console.log($.cookie('graph_session'));
+
 if ($.cookie('graph_session')) {
     d3.json("graphFile.json", function (error, graph) {
         if (error) throw error;
