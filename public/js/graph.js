@@ -30,18 +30,16 @@ var simulation = d3.forceSimulation()
 //Create a cookie test
 $.cookie('graph_session', 'graphfile.json');
 
-
-d3.json("graphFile.json", function (error, graph) {
-    if (error) throw error;
-
-    // Check if cookie exists
-    if ($.cookie('graph_session')) {
+if ($.cookie('graph_session')) {
+    d3.json($.cookie('graph-session'), function (error, graph) {
+        if (error) throw error;
         update(graph.links, graph.nodes);
-    }
-    else {
-        console.log("No Cookie found")
-    }
-})
+   
+    })
+}
+else {
+    console.log("No Cookie found")
+}
 
 function update(links, nodes) {
     link = svg.selectAll(".link")
