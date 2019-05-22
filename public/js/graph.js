@@ -27,10 +27,14 @@ var simulation = d3.forceSimulation()
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2));
 
+//Create a cookie test
+$.cookie('graph_session', 'graphfile.json');
+
+
 d3.json("graphFile.json", function (error, graph) {
     if (error) throw error;
 
-    // Cookie test
+    // Check if cookie exists
     if ($.cookie('graph_session')) {
         update(graph.links, graph.nodes);
     }
