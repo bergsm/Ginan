@@ -29,7 +29,14 @@ var simulation = d3.forceSimulation()
 
 d3.json("graphFile.json", function (error, graph) {
     if (error) throw error;
-    update(graph.links, graph.nodes);
+
+    // Cookie test
+    if ($.cookie('graph_session')) {
+        update(graph.links, graph.nodes);
+    }
+    else {
+        console.log("No Cookie found")
+    }
 })
 
 function update(links, nodes) {
