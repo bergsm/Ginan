@@ -37,7 +37,7 @@ $.cookie('graph_session', graphtext);
 console.log($.cookie('graph_session'));
 
 if ($.cookie('graph_session')) {
-    var root = $.parseJSON(graph_session);
+    var root = $.parseJSON($.cookie('graph_session'));
     d3.json(root, function (error, graph) {
         if (error) throw error;
         update(graph.links, graph.nodes);
