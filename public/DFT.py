@@ -13,8 +13,10 @@ if len(sys.argv) < 3:
 #Initialize list of variables
 initUrl = sys.argv[1]
 depth = int(sys.argv[2])
+keyword = sys.argv[3]
 urlChain = []
 
+print("keyword is: " + keyword)
 
 # Function to write urls from DFS to json file for
 # neo4j
@@ -81,9 +83,9 @@ def DFT(url, depth, links):
     links = parsePage(url, links)
 
     #base case
-    if depth == 0 or links == []:
+    if depth == 0 or links == [] or any(keyword in link for link in urlChain):
         #write urlChain to file for graph and exit
-        print("Depth reached, no links on page, or url format incorrect. Generating results..")
+        print("Depth reached, keyword found, no links on page, or url format incorrect. Generating results..")
         writeToFile(urlChain)
         exit(0)
 
