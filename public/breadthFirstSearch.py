@@ -8,6 +8,7 @@ import os
 import urllib
 from bs4 import BeautifulSoup
 from urlparse import urljoin
+from itertools import cycle
 
 sys.stdout = open('log','w')
 
@@ -29,7 +30,7 @@ soup = BeautifulSoup(html, 'html.parser')
 unvisitedURLs = []
 unvisitedURLs.append(startingURL)
 
-
+listOfNeighbors = []
 
 # The following write function was written by Shawn Berg, all credit to him for this
 # Function to write urls from DFS to json file
@@ -52,7 +53,7 @@ def writeToFile(urls):
 def breadthFirstSearch(startingURL, depth, keyword):
   
     observedURLs = []
-
+    
     #some debugging checks, did everything make it into the data structure and what is the starting URL
     #print "How many unvisited URLs? - ", len(unvisitedURLs)
     #print "The starting URL is: " ,startingURL
@@ -61,20 +62,23 @@ def breadthFirstSearch(startingURL, depth, keyword):
 	
         #get the first URL in the list
         unvisited = unvisitedURLs.pop(0)
- 	
+	observedURLs.append(unvisited) 	
 	#need to get full URL rather than the relative path of every link on the page and add them to the unvisited list. Source for urljoin which 
 	#gets the absolute path: https://stackoverflow.com/questions/44001007/scrape-the-absolute-url-instead-of-a-relative-path-in-python
 	for links in soup.find_all('a',):
+		listOfNeighbors = []
 		#print "entered the loop looking for links"
 		absoluteURL = urljoin(unvisited, links.get('href'))
 		
 		#if the URL is not already in the unvisted list, add it
 		if absoluteURL not in unvisitedURLs:
 			unvisitedURLs.append(absoluteURL)
+			listOfNeighbors.append(absoluteURL)
 			#print "appended a new URL"
-	
+	#observedURLs.append(listOfNeighbors)
 	#add the parsed URL to the observed list
-	observedURLs.append(unvisited)
+		#observedURLs.append(unvisited)
+	test = zip(cycle(observedURLs), unvisitedURLs)
 	#look to see if the keyword is in the URL
 	if keyword in unvisited:
         	'''
@@ -110,6 +114,9 @@ def breadthFirstSearch(startingURL, depth, keyword):
     for y in unvisitedURLs:
 	print y
     '''
-    writeToFile(observedURLs)
+    for z in unvisitedURLs:
+	print z
+    print "/n", test
+    #writeToFile(observedURLs)
 
 breadthFirstSearch(startingURL, depth, keyword)
