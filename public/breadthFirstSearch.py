@@ -78,6 +78,7 @@ def breadthFirstSearch(startingURL, depth, keyword):
 	#observedURLs.append(listOfNeighbors)
 	#add the parsed URL to the observed list
 		#observedURLs.append(unvisited)
+	#source for zip and cycle: https://stackoverflow.com/questions/19686533/how-to-zip-two-differently-sized-lists
 	test = zip(cycle(observedURLs), unvisitedURLs)
 	#look to see if the keyword is in the URL
 	if keyword in unvisited:
@@ -116,7 +117,7 @@ def breadthFirstSearch(startingURL, depth, keyword):
     '''
     for z in unvisitedURLs:
 	print z
-    print "/n", test
-    #writeToFile(observedURLs)
+    print "\n", test
+    writeToFile(observedURLs)
 
 breadthFirstSearch(startingURL, depth, keyword)
