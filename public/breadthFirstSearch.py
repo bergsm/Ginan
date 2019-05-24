@@ -9,13 +9,17 @@ import urllib
 from bs4 import BeautifulSoup
 from urlparse import urljoin
 
+sys.stdout = open('log','w')
+
 startingURL = sys.argv[1]
 depth = int(sys.argv[2])
+
 #set the keyword if the user input one, set to a dummy value if they didn't
-if len(sys.argv) == 4:
-	keyword = sys.argv[3]
-else:
+keyword = sys.argv[3]
+if keyword is '':
 	keyword = 'aaaaaa'
+
+print keyword
 
 #parse the URL
 html = urllib.urlopen(startingURL).read()
@@ -24,6 +28,8 @@ soup = BeautifulSoup(html, 'html.parser')
 
 unvisitedURLs = []
 unvisitedURLs.append(startingURL)
+
+
 
 # The following write function was written by Shawn Berg, all credit to him for this
 # Function to write urls from DFS to json file
@@ -66,32 +72,44 @@ def breadthFirstSearch(startingURL, depth, keyword):
 		if absoluteURL not in unvisitedURLs:
 			unvisitedURLs.append(absoluteURL)
 			#print "appended a new URL"
-		#if absoluteURL.find(keyword):
-			#print 'found the keyword!'
-			#break
 	
 	#add the parsed URL to the observed list
 	observedURLs.append(unvisited)
-	#look to see if the keyword is in the URL. Source for Python's find(): https://www.tutorialspoint.com/python/string_find.htm
-	#if keyword in absoluteURL:
-	#if absoluteURL.find(keyword, beg = 0, end = len(absoluteURL)):
-		#print "found the keyword!"
-		#break
+	#look to see if the keyword is in the URL
+	if keyword in unvisited:
+        	'''
+		print 'found the keyword!'
+                #debug time
+                print "How many observed URLs? - " ,len(observedURLs)
+                print "How many unobserved URLs? - " ,len(unvisitedURLs)
+                #print the list in a readable format to help with debugging    
+                print "The list of observed URLs: "
+                for x in observedURLs:
+                        print x
+                #print the list in a readable format to help with debugging
+                print "\n\nThe list of unvisited URLs: "
+                for y in unvisitedURLs:
+                	print y
+		'''
+                writeToFile(observedURLs)
+                exit(0)
 	#this will run indefinitely unless we add a limit. For now, the hard coded limit of number of URLs left to visit is 500
-	if len(unvisitedURLs) > 200:
+	if len(observedURLs) == depth:
 		#print "unvisited > 500"
 		break	
+    '''
     #debug time
-    #print "How many observed URLs? - " ,len(observedURLs)
-    #print "How many unobserved URLs? - " ,len(unvisitedURLs)
-    #print the list in a readable format to help with debugging    
-    #print "The list of observed URLs: "
-    writeToFile(observedURLs)
-    #for x in observedURLs:
-	#print x
+    print "How many observed URLs? - " ,len(observedURLs)
+    print "How many unobserved URLs? - " ,len(unvisitedURLs)
+    print the list in a readable format to help with debugging    
+    print "The list of observed URLs: "
+    for x in observedURLs:
+	print x
     #print the list in a readable format to help with debugging
-    #print "\n\nThe list of unvisited URLs: "
-    #for y in unvisitedURLs:
-	#print y
+    print "\n\nThe list of unvisited URLs: "
+    for y in unvisitedURLs:
+	print y
+    '''
+    writeToFile(observedURLs)
 
 breadthFirstSearch(startingURL, depth, keyword)
