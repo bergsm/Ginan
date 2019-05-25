@@ -18,7 +18,16 @@
             <div class="col-sm-2">
                 <input type="number" class="form-control" id="crawlLimit" name="data[crawlLimit]" aria-describedby="limitHelp" placeholder="1" min="1" max="10" value="1">
             </div>
-            <small id="limitHelp" class="form-text text-muted">Enter the number of links to crawl between 1 - 10 </small>
+            <small id="limitHelp" class="form-text text-muted">Enter the number of links to crawl between 1 - x </small>
+        </fieldset>
+        <fieldset>
+            <div class="form-group">
+                <label for="keyword">Keyword</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="keywordInput" name="data[keywordInput]" aria-describedby="URLHelp" placeholder="Enter optional keyword">
+                </div>
+                <small id="URLHelp" class="form-text text-muted">Enter an optional keyword to stop the search if discovered</small>
+            </div>
         </fieldset>
         <fieldset class="form-group" >
             <legend>Crawl Type</legend>
@@ -43,9 +52,10 @@
         </fieldset>
     </form>
 </div>
-
-<div class="jumbotron">
-    <svg width="900" height="600" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="container">
+    <div class="jumbotron">
+           <svg width="900" height="600" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
 </div>
 
 <!-- JavaScript -->

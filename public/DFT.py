@@ -11,7 +11,6 @@ if len(sys.argv) < 3:
     exit(1)
 
 #Initialize list of variables
-#TODO add "http://" if needed to argument
 initUrl = sys.argv[1]
 depth = int(sys.argv[2])
 urlChain = []
@@ -40,28 +39,32 @@ def writeToFile(urls):
 # Function to parse page for all links
 # Args: url for page in question
 # Returns: array/list of links
-def parsePage(url):
+def parsePage(url, links):
     #fetch page
     print("Fetching page..")
-    #TODO SSL errors are occuring for certain links
     try:
         r = requests.get(url)
-    except requests.exceptions.RequestException as e:
-        #TODO pick another link if available
-        print("Error fetching page: " + str(e))
-        return []
-    else:
         page = r.content
         print("Parsing..")
         soup = BeautifulSoup(page, "html.parser")
+        if not soup.body:
+            raise Exception("Page not parsed")
         links = []
         for link in soup.find_all('a'):
             links.append(urljoin(url, link.get('href')))
-
-        #Debug links
-        #links = ["test1.com", "test2.com", "test3.com"]
-
-        #return links as array/list
+    except Exception as e:
+        #pick another link if available
+        print("Error: " + str(e))
+        if len(links) < 1:
+            print("No other links available.")
+            return []
+        else:
+            print("Choosing a different link..")
+            randNum = random.randint(0, len(links)-1)
+            url = links[randNum]
+            del links[randNum]
+            return parsePage(url, links)
+    else:
         return links
 
 
@@ -69,13 +72,13 @@ def parsePage(url):
 # source page
 # Args: valid url, depth to traverse
 # Returns: None
-def DFT(url, depth):
+def DFT(url, depth, links):
 
     #add url to chain
     urlChain.append(url)
 
     #parse page for all links
-    links = parsePage(url)
+    links = parsePage(url, links)
 
     #base case
     if depth == 0 or links == []:
@@ -88,10 +91,11 @@ def DFT(url, depth):
     print("Choosing link at random..")
     randNum = random.randint(0, len(links)-1)
     url = links[randNum]
+    del links[randNum]
     print("Random url is: " + url)
 
     #decrement and recurse
     depth -= 1
-    DFT(url, depth)
+    DFT(url, depth, links)
 
-DFT(initUrl, depth)
+DFT(initUrl, depth, [])
