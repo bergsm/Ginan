@@ -34,15 +34,14 @@ var graphtext = '{"nodes": [{"name": "URL","label": " http://www.espn.com","id":
 //  TEST Create a cookie test using the variable
 $.cookie('graph_session', graphtext);
 
-console.log($.cookie('graph_session'));
+// TEST JSON data is good
+//console.log($.cookie('graph_session'));
 
 //If the cookie exists load the graph
 if ($.cookie('graph_session')) {
     //parse json from cookie
     graphjson = JSON.parse($.cookie('graph_session'));
-    // Pull the json data from the cookie
-    //svg.data(graphjson);
-    //if (error) throw error;
+    // Send the parsed json data to the graph update function
     update(graphjson.links, graphjson.nodes);
 }
 else {
