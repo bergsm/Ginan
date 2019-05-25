@@ -30,7 +30,6 @@ var simulation = d3.forceSimulation()
 
 // TEST json data in a variable
 var graphtext = '{"nodes": [{"name": "URL","label": " http://www.espn.com","id": 1},{"name": "URL","label": " http://twitter.com/intent/tweet?url=http%3A%2f%2fwww.espn.com%2fespn%2ffeature%2fstory%2f_%2fid%2f18332398%2fespn%2dfantasy%2dapp%2despn&text=Download+the+ESPN+Fantasy+App","id": 2},{"name": "URL","label": " https://twitter.com/signup?context=webintent","id": 3},{"name": "URL","label": " https://twitter.com/signup?context=webintent","id": 4}],"links": [{"source": 1,"target": 2,"type": "Links_To"},{"source": 2,"target": 3,"type": "Links_To"},{"source": 3,"target": 4,"type": "Links_To"}]}';
-//graphtext = JSON.stringify(graphtext);
 
 //  TEST Create a cookie test using the variable
 $.cookie('graph_session', graphtext);
@@ -42,11 +41,9 @@ if ($.cookie('graph_session')) {
     //parse json from cookie
     graphjson = JSON.parse($.cookie('graph_session'));
     // Pull the json data from the cookie
-    x.domain(graphjson.map(function (d) { return d.file_id }));
-    y.domain([0, d3.max(graphjson, function (d) { return d.t })]);
+    svg.data(graphjson);
     if (error) throw error;
     update(graph.links, graph.nodes);
-   
 }
 else {
     console.log("No Cookie found")
