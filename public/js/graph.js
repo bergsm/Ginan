@@ -41,9 +41,9 @@ if ($.cookie('graph_session')) {
     //parse json from cookie
     graphjson = JSON.parse($.cookie('graph_session'));
     // Pull the json data from the cookie
-    svg.data(graphjson);
-    if (error) throw error;
-    update(graph.links, graph.nodes);
+    //svg.data(graphjson);
+    //if (error) throw error;
+    update(graphjson.links, graphjson.nodes);
 }
 else {
     console.log("No Cookie found")
