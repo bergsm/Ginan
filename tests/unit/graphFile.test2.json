@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    {
+      "name": "URL",
+      "label": "https://www.test1.org",
+       "id":1
+    },
+    {
+      "name": "URL",
+      "label": "https://www.testing2.edu",
+       "id":2
+    },
+    {
+      "name": "URL",
+      "label": "http://www.testme3.co",
+       "id":3
+    },
+    {
+      "name": "URL",
+      "label": "http://www.test4.io",
+       "id":4
+    }
+  ],
+  "links": [
+    {
+      "source": 1,
+      "target": 2,
+      "type": "Links_To"
+    },
+    {
+      "source": 2,
+      "target": 3,
+      "type": "Links_To"
+    },
+    {
+      "source": 3,
+      "target": 4,
+      "type": "Links_To"
+    }
+  ]
+}
