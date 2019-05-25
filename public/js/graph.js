@@ -40,9 +40,9 @@ console.log($.cookie('graph_session'));
 //If the cookie exists load the graph
 if ($.cookie('graph_session')) {
     //parse json from cookie
-    //graphjson = JSON.parse($.cookie('graph-session'));
+    graphjson = JSON.parse($.cookie('graph-session'));
     // Pull the json data from the cookie
-    d3.json($.cookie('graph-session'), function (error, graph) {
+    d3.json(graphjson, function (error, graph) {
         if (error) throw error;
         update(graph.links, graph.nodes);
    
