@@ -42,11 +42,11 @@ if ($.cookie('graph_session')) {
     //parse json from cookie
     graphjson = JSON.parse($.cookie('graph_session'));
     // Pull the json data from the cookie
-    d3.json(graphjson, function (error, graph) {
-        if (error) throw error;
-        update(graph.links, graph.nodes);
+    x.domain(graphjson.map(function (d) { return d.file_id }));
+    y.domain([0, d3.max(graphjson, function (d) { return d.t })]);
+    if (error) throw error;
+    update(graph.links, graph.nodes);
    
-    })
 }
 else {
     console.log("No Cookie found")
