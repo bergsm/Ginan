@@ -2,23 +2,28 @@
   "nodes": [
     {
       "name": "URL",
-      "label": " http://www.espn.com",
-      "id": 1
+      "label": "http://www.seattletimes.com",
+       "id":1
     },
     {
       "name": "URL",
-      "label": " http://twitter.com/intent/tweet?url=http%3A%2f%2fwww.espn.com%2fespn%2ffeature%2fstory%2f_%2fid%2f18332398%2fespn%2dfantasy%2dapp%2despn&text=Download+the+ESPN+Fantasy+App",
-      "id": 2
+      "label": "http://www.seattletimes.com#content",
+       "id":2
     },
     {
       "name": "URL",
-      "label": " https://twitter.com/signup?context=webintent",
-      "id": 3
+      "label": "https://www.seattletimes.com",
+       "id":3
     },
     {
       "name": "URL",
-      "label": " https://twitter.com/signup?context=webintent",
-      "id": 4
+      "label": "http://www.seattletimes.com/seattle-news/weather/",
+       "id":4
+    },
+    {
+      "name": "URL",
+      "label": "http://www.seattletimes.com/traffic/",
+       "id":5
     }
   ],
   "links": [
@@ -35,6 +40,11 @@
     {
       "source": 3,
       "target": 4,
+      "type": "Links_To"
+    },
+    {
+      "source": 4,
+      "target": 5,
       "type": "Links_To"
     }
   ]
