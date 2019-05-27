@@ -3,9 +3,8 @@
     "",
     "\\public",
     "\\public\\js",
-    "\\views",
-    "\\views\\layouts"
+    "\\views"
   ],
-  "SelectedNode": "\\home.js",
+  "SelectedNode": "\\public\\graphFile.json",
   "PreviewInSolutionExplorer": false
 }
