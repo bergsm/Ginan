@@ -111,7 +111,7 @@ def breadthFirstSearch(startingURL, depth, keyword):
 	if len(observedURLs) == depth:
 		break	
     '''
-    #debug time
+    #debug timee
     print "How many observed URLs? - " ,len(observedURLs)
     print "How many unobserved URLs? - " ,len(unvisitedURLs)
     print the list in a readable format to help with debugging    
