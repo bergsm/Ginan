@@ -30,7 +30,7 @@ soup = BeautifulSoup(html, 'html.parser')
 unvisitedURLs = []
 unvisitedURLs.append(startingURL)
 
-listOfNeighbors = []
+#listOfNeighbors = []
 
 # The following write function was written by Shawn Berg, all credit to him for this
 # Function to write urls from DFS to json file
@@ -53,7 +53,7 @@ def writeToFile(urls):
 def breadthFirstSearch(startingURL, depth, keyword):
   
     observedURLs = []
-    
+    test = {}
     #some debugging checks, did everything make it into the data structure and what is the starting URL
     #print "How many unvisited URLs? - ", len(unvisitedURLs)
     #print "The starting URL is: " ,startingURL
@@ -62,24 +62,33 @@ def breadthFirstSearch(startingURL, depth, keyword):
 	
         #get the first URL in the list
         unvisited = unvisitedURLs.pop(0)
+	print type(unvisited)
+	print unvisited, "\n"
 	observedURLs.append(unvisited) 	
 	#need to get full URL rather than the relative path of every link on the page and add them to the unvisited list. Source for urljoin which 
 	#gets the absolute path: https://stackoverflow.com/questions/44001007/scrape-the-absolute-url-instead-of-a-relative-path-in-python
 	for links in soup.find_all('a',):
-		listOfNeighbors = []
+		#listOfNeighbors = []
 		#print "entered the loop looking for links"
 		absoluteURL = urljoin(unvisited, links.get('href'))
 		
 		#if the URL is not already in the unvisted list, add it
 		if absoluteURL not in unvisitedURLs:
+			#observedURLs.append(absoluteURL)
 			unvisitedURLs.append(absoluteURL)
-			listOfNeighbors.append(absoluteURL)
+			#listOfNeighbors.append(absoluteURL)
 			#print "appended a new URL"
 	#observedURLs.append(listOfNeighbors)
 	#add the parsed URL to the observed list
 		#observedURLs.append(unvisited)
+	#test = {}
 	#source for zip and cycle: https://stackoverflow.com/questions/19686533/how-to-zip-two-differently-sized-lists
-	test = zip(cycle(observedURLs), unvisitedURLs)
+	#test = (zip(cycle(observedURLs), unvisitedURLs))
+		#for keys, value in zip(observedURLs, unvisitedURLs):
+		#	l = test.get(keys, [])
+		#	l.append(value)
+		#	test[keys] = l
+
 	#look to see if the keyword is in the URL
 	if keyword in unvisited:
         	'''
@@ -98,9 +107,8 @@ def breadthFirstSearch(startingURL, depth, keyword):
 		'''
                 writeToFile(observedURLs)
                 exit(0)
-	#this will run indefinitely unless we add a limit. For now, the hard coded limit of number of URLs left to visit is 500
+	#this will run indefinitely unless we add a limit. The limit is the number of traversed URLs determined by the user's input for depth
 	if len(observedURLs) == depth:
-		#print "unvisited > 500"
 		break	
     '''
     #debug time
@@ -115,9 +123,23 @@ def breadthFirstSearch(startingURL, depth, keyword):
     for y in unvisitedURLs:
 	print y
     '''
+    #source for zip and cycle: https://stackoverflow.com/questions/19686533/how-to-zip-two-differently-sized-lists
+    #https://stackoverflow.com/questions/32418354/convert-two-lists-to-dictionary-with-values-as-list
+    for parent, neighbors in zip(cycle(observedURLs), unvisitedURLs):
+    	listOfNeighbors = test.get(parent, [])
+	if neighbors not in listOfNeighbors:
+        	listOfNeighbors.append(neighbors)
+       		test[parent] = listOfNeighbors
+
+    #debug, what are the unvisited URLs
     for z in unvisitedURLs:
 	print z
-    print "\n", test
+   
+    #print the appended discovered URLs
+    for a in test:
+	print "\n"
+	print test[a]
+   
     writeToFile(observedURLs)
 
 breadthFirstSearch(startingURL, depth, keyword)
