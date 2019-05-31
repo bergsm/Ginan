@@ -73,7 +73,7 @@ def DFT(url, depth, urlChain, links, keyword):
     links = parsePage(url, links)
 
     #base case
-    if depth == 0 or links == [] or any(keyword in link for link in urlChain):
+    if depth == 0 or links == [] or (any(keyword in link for link in urlChain) and keyword):
         #write urlChain to file for graph and exit
         print("Depth reached, keyword found, no links on page, or url format incorrect. Generating results..")
         writeToFile(urlChain, outputFP)
