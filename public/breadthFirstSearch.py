@@ -9,18 +9,18 @@ import urllib
 from bs4 import BeautifulSoup
 from urlparse import urljoin
 from itertools import cycle
+import Cookie
 
 sys.stdout = open('log','w')
 
 startingURL = sys.argv[1]
 depth = int(sys.argv[2])
+c = Cookie.SimpleCookie()
 
 #set the keyword if the user input one, set to a dummy value if they didn't
 keyword = sys.argv[3]
 if keyword is '':
 	keyword = 'aaaaaa'
-
-print keyword
 
 #parse the URL
 html = urllib.urlopen(startingURL).read()
@@ -37,21 +37,26 @@ unvisitedURLs.append(startingURL)
 # Args: urls in order from DFS
 # Returns: None
 def writeToFile(urls):
-    with open('./public/graphFile.json', 'w+') as f:
-        f.write('{\n  \"nodes\": [')
-        for counter, url in enumerate(urls):
-            f.write('\n    {\n      "name\": \"URL\",\n      "label\": \"' + url + '\",\n       "id\":' +  str(counter+1) + '\n    }')
-            if counter < len(urls)-1:
-                f.write(',')
-        f.write('\n  ],\n  \"links\": [')
-        for i in range(1, len(urls)):
-            f.write('\n    {\n      \"source\": ' + str(i) + ',\n      \"target\": ' + str(i+1) + ',\n      \"type\": \"Links_To\"\n    }')
-            if i < len(urls)-1:
-                f.write(',')
-        f.write('\n  ]\n}')
+    with open('./public/graph_session', 'w+') as f:
+        f.write(urls)
+        #for counter, url in enumerate(urls):
+        #    f.write('\n    {\n      "name\": \"URL\",\n      "label\": \"' + url + '\",\n       "id\":' +  str(counter+1) + '\n    }')
+        #    if counter < len(urls)-1:
+        #        f.write(',')
+        #f.write('\n  ],\n  \"links\": [')
+        #f.write(type(nodes))
+            #f.write('\n    {\n      \"source\": ' + urls + ',\n      \"target\": ' + nodes(str(i)) + ',\n      \"type\": \"Links_To\"\n    }')
+        #if i < len(urls)-1:
+        #	f.write(',')
+        #f.write('\n  ]\n}')
+
 
 def breadthFirstSearch(startingURL, depth, keyword):
-  
+    counter = 1
+    neighborCounter = 1
+    anotherCounter = 2
+    parentString = '{"nodes": ['
+    neighborString = '{"links": ['
     observedURLs = []
     test = {}
     #some debugging checks, did everything make it into the data structure and what is the starting URL
@@ -61,21 +66,30 @@ def breadthFirstSearch(startingURL, depth, keyword):
     while len(unvisitedURLs) != 0:
 	
         #get the first URL in the list
-        unvisited = unvisitedURLs.pop(0)
+        discovered = unvisitedURLs.pop(0)
+	unvisited = discovered.encode('ascii')
 	print type(unvisited)
 	print unvisited, "\n"
-	observedURLs.append(unvisited) 	
+	observedURLs.append(unvisited) 
+	nextParentString = ('{"name": "URL", "label": \"' + unvisited + '\", "id": ' + str(counter) + '}, ')
+	parentString +=  nextParentString
 	#need to get full URL rather than the relative path of every link on the page and add them to the unvisited list. Source for urljoin which 
 	#gets the absolute path: https://stackoverflow.com/questions/44001007/scrape-the-absolute-url-instead-of-a-relative-path-in-python
 	for links in soup.find_all('a',):
 		#listOfNeighbors = []
 		#print "entered the loop looking for links"
 		absoluteURL = urljoin(unvisited, links.get('href'))
-		
+
 		#if the URL is not already in the unvisted list, add it
 		if absoluteURL not in unvisitedURLs:
 			#observedURLs.append(absoluteURL)
 			unvisitedURLs.append(absoluteURL)
+			nextParentString = ('{"name": "URL", "label": \"' + absoluteURL + '\", "id": ' + str(anotherCounter) + '}, ')
+			parentString += nextParentString
+			nextNeighborString = ('{"source": \"' + str(counter) + '", "target": \"' + str(neighborCounter) + '\", "type": "Links_To"}, ')
+			neighborString += nextNeighborString
+			neighborCounter += 1
+			anotherCounter += 1
 			#listOfNeighbors.append(absoluteURL)
 			#print "appended a new URL"
 	#observedURLs.append(listOfNeighbors)
@@ -105,11 +119,12 @@ def breadthFirstSearch(startingURL, depth, keyword):
                 for y in unvisitedURLs:
                 	print y
 		'''
-                writeToFile(observedURLs)
+                #writeToFile(observedURLs)
                 exit(0)
 	#this will run indefinitely unless we add a limit. The limit is the number of traversed URLs determined by the user's input for depth
 	if len(observedURLs) == depth:
-		break	
+		break
+	counter += 1	
     '''
     #debug timee
     print "How many observed URLs? - " ,len(observedURLs)
@@ -130,16 +145,34 @@ def breadthFirstSearch(startingURL, depth, keyword):
 	if neighbors not in listOfNeighbors:
         	listOfNeighbors.append(neighbors)
        		test[parent] = listOfNeighbors
+   
+    #counter = 0
+    #for parentNode in observedURLs:
+    	#print parentNode
+	#print ('\n    {\n      "name\": \"URL\",\n      "Label\": \"' + parentNode + '\",\n       "id\":' +  (counter + 1) + '\n    }')
+        #if  counter < len(parentNode)-1:
+        #	print (',')
+	#counter += 1
+    #for neighboringNode in test:
+	#print test[neighboringNode]
 
     #debug, what are the unvisited URLs
-    for z in unvisitedURLs:
-	print z
+    #for z in unvisitedURLs:
+	#print z
    
     #print the appended discovered URLs
-    for a in test:
-	print "\n"
-	print test[a]
-   
-    writeToFile(observedURLs)
-
+    #for a in test:
+	#print "\n"
+	#writeToFile(observedURLs, test[a])
+    parentString += neighborString
+    parentString = parentString[:-2]
+    parentString += ']}'
+    #print parentString
+    #graph_session = parentString
+    c['graph_session'] = parentString
+    c.load(graph_session)
+    writeToFile(parentString)
+    #writeToFile(observedURLs, test)
+    #print c.js_output()
+    return c
 breadthFirstSearch(startingURL, depth, keyword)
