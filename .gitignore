@@ -4,3 +4,4 @@ stop.sh
 DFT.json
 env
 *.bak
+*.pyc
