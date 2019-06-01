@@ -29,13 +29,13 @@ app.use(function (req, res, next) {
         var randomNumber=Math.random().toString();
         randomNumber=randomNumber.substring(2,randomNumber.length);
         //read the file synchronously. Was having trouble with async... source: https://stackoverflow.com/questions/10058814/get-data-from-fs-readfile
-	var graph_session_data = fs.readFileSync('./public/graph_session.json', 'utf8'); //will need to change this, I was writing to a file graph_session in BFS script
+	var graph_session_data = fs.readFileSync('./public/graph_session', 'utf8'); //will need to change this, I was writing to a file graph_session in BFS script
 	//was the data read correctly?
 	console.log(graph_session_data);
 	//set the cookie
         res.cookie('graph_session',randomNumber, { maxAge: 900000, httpOnly: false });
         console.log('cookie created successfully');
-	//console.log(req.cookies.graph_session);
+	console.log(req.cookies.graph_session);
      } 
      else
      {
