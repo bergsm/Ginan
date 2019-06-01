@@ -20,28 +20,28 @@ app.set('port', 3030);
 //NOTE: very heavily relied upon as written for SO answer
 // set a cookie
 app.use(function (req, res, next) {
-   // check if client sent cookie
-     var cookie = req.cookies.graph_session;
-     if (cookie === undefined)
-     {
-     	// no: set a new cookie
-     	// use random number for proof of concept
-        var randomNumber=Math.random().toString();
-        randomNumber=randomNumber.substring(2,randomNumber.length);
-        //read the file synchronously. Was having trouble with async... source: https://stackoverflow.com/questions/10058814/get-data-from-fs-readfile
-	//var graph_session_data = fs.readFileSync('./public/graph_session', 'utf8'); //will need to change this, I was writing to a file graph_session in BFS script
-	//was the data read correctly?
-	//console.log(graph_session_data);
-	//set the cookie
-        //res.cookie('test2',randomNumber, { maxAge: 900000, httpOnly: false });
-        //console.log('cookie created successfully');
-	//console.log(req.cookies.graph_session);
-     }
-     else
-     {
-     	// yes, cookie was already present
-        //console.log('cookie exists', cookie);
-     }
+//   // check if client sent cookie
+//     var cookie = req.cookies.graph_session;
+//     if (cookie === undefined)
+//     {
+//     	// no: set a new cookie
+//     	// use random number for proof of concept
+//        //var randomNumber=Math.random().toString();
+//        //randomNumber=randomNumber.substring(2,randomNumber.length);
+//        //read the file synchronously. Was having trouble with async... source: https://stackoverflow.com/questions/10058814/get-data-from-fs-readfile
+//	//var graph_session_data = fs.readFileSync('./public/graph_session', 'utf8'); //will need to change this, I was writing to a file graph_session in BFS script
+//	//was the data read correctly?
+//	//console.log(graph_session_data);
+//	//set the cookie
+//        //res.cookie('test2',randomNumber, { maxAge: 900000, httpOnly: false });
+//        //console.log('cookie created successfully');
+//	//console.log(req.cookies.graph_session);
+//     }
+//     else
+//     {
+//     	// yes, cookie was already present
+//        console.log('cookie exists', cookie);
+//     }
      next();
 });
 
@@ -56,8 +56,13 @@ app.post('/test-page', function (req, res) {
     //res.send(req.body);
     if (req.body.search_type == 'DFS') {
         const pythonProcess = spawn('python',["./public/DFT.py", req.body.starting_url, req.body.crawl_limit]);
-        //console.log(pythonProcess.stdout.toString());
-        res.cookie('test', pythonProcess.stdout.toString());
+        // I adjusted my script so irrelevant statements print to stderr and the json prints to stdout
+        // so this line prints status updates to the console.
+        console.log(pythonProcess.stderr.toString());
+        // These lines should and sometimes? print the data to the cookie.
+        //res.cookie('graph_session', pythonProcess.stdout.toString());
+        //res.cookie('test2', pythonProcess.stdout.toString());
+        res.cookie('test3', pythonProcess.stdout.toString());
         res.render('crawler');
     }
     else {
