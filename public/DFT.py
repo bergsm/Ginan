@@ -1,18 +1,20 @@
 import requests
+import Cookie
 import sys
 import random
 from bs4 import BeautifulSoup
 from urlparse import urljoin
 
 outputFP = './public/graphFile.json'
+#cookieName = 'graph_session'
+cookieName = 'test2'
 
 
 # Function to write urls from DFS to json file for
-# neo4j
-# Args: urls in order from DFS
+# d3
+# Args: urls in order from DFS, filePath to save
 # Returns: None
 def writeToFile(urls, filePath):
-    #with open('./public/graphFile.json', 'w+') as f:
     with open(filePath, 'w+') as f:
         f.write('{\n  \"nodes\": [')
         for counter, url in enumerate(urls):
@@ -26,6 +28,32 @@ def writeToFile(urls, filePath):
                 f.write(',')
         f.write('\n  ]\n}')
 
+
+# Function to write urls from DFS to json cookie for d3
+# Args: urls in order from DFS, cookie name
+# Returns: None
+def writeToCookie(urls, cookieName):
+    jsonString = ''
+    jsonString += '{\n  \"nodes\": ['
+    for counter, url in enumerate(urls):
+        jsonString += '\n    {\n      "name\": \"URL\",\n      "label\": \"' + url + '\",\n       "id\":' +  str(counter+1) + '\n    }'
+        if counter < len(urls)-1:
+            jsonString += ','
+    jsonString += '\n  ],\n  \"links\": ['
+    for i in range(1, len(urls)):
+        jsonString += '\n    {\n      \"source\": ' + str(i) + ',\n      \"target\": ' + str(i+1) + ',\n      \"type\": \"Links_To\"\n    }'
+        if i < len(urls)-1:
+            jsonString += ','
+    jsonString += '\n  ]\n}'
+    c = Cookie.SimpleCookie()
+    c[cookieName] = jsonString
+    s = requests.Session()
+    cookie_obj = requests.cookies.create_cookie(domain='localhost:3030',name='test_cookie',value='wish this would work')
+    s.cookies.set_cookie(cookie_obj)
+    #s.post('http://localhost:3030', cookies=c)
+    #s.cookies.set(c)
+    #r = requests.post('http://localhost:3030', cookies=c)
+    #print c.js_output()
 
 
 # Function to parse page for all links
@@ -77,6 +105,7 @@ def DFT(url, depth, urlChain, links, keyword):
         #write urlChain to file for graph and exit
         print("Depth reached, keyword found, no links on page, or url format incorrect. Generating results..")
         writeToFile(urlChain, outputFP)
+        writeToCookie(urlChain, cookieName)
         return
 
     #choose one link at random
@@ -91,6 +120,9 @@ def DFT(url, depth, urlChain, links, keyword):
     DFT(url, depth, urlChain, links, keyword)
 
 def main():
+    c = Cookie.SimpleCookie()
+    c['test'] = 'hello'
+    print(c)
     #Take starting url as argument?
     if len(sys.argv) < 3:
         print("No url and/or depth argument provided")
