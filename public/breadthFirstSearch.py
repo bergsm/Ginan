@@ -168,9 +168,9 @@ def breadthFirstSearch(startingURL, depth, keyword):
     parentString = parentString[:-2]
     parentString += ']}'
     #print parentString
-    #graph_session = parentString
+    graph_session = parentString
     c['graph_session'] = parentString
-    c.load(graph_session)
+    #c.load(graph_session)
     writeToFile(parentString)
     #writeToFile(observedURLs, test)
     #print c.js_output()
