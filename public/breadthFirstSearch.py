@@ -180,7 +180,7 @@ def breadthFirstSearch(startingURL, depth, keyword):
     parentString = parentString[:-2]
     parentString += "]}\n"
 
-    #debug, does the final string look correct
+    #debugging, does the final string look correct
     #print parentString
     
     #debug, are we getting proper stderr communication

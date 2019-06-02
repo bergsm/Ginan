@@ -39,7 +39,7 @@ app.post('/test-page', function (req, res) {
 	const pythonProcess = spawn('python', ["./public/breadthFirstSearch.py", req.body.starting_url, req.body.crawl_limit, req.body.keywordInput], {stdio: 'pipe', encoding: 'utf-8'});
     	res.cookie('graph_session');
 	console.log(pythonProcess.stderr.toString());
-	//console.log(pythonProcess.stdout.toString());
+	//console.log(pythonProcess.stdout.toString()); //print to console
 	res.render('crawler');
     }
 });
