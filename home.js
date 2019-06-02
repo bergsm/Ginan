@@ -22,6 +22,7 @@ app.set('port', 3030);
 // set a cookie
 app.use(function (req, res, next) {
 // It looks like this was used to read the cookie contents from a file, which is sort of what we were doing previously when rendering d3 with file contents. I don't know enough about node.js to know if the app.use funciton is integral to cookie creation/writing, but I presume we will need this to load the user's previous cookie once they are working?
+
 //   // check if client sent cookie
 //     var cookie = req.cookies.graph_session;
 //     if (cookie === undefined)
@@ -44,6 +45,7 @@ app.use(function (req, res, next) {
 //     	// yes, cookie was already present
 //        console.log('cookie exists', cookie);
 //     }
+
      next();
 });
 
@@ -71,13 +73,15 @@ app.post('/test-page', function (req, res) {
 	const pythonProcess = spawn('python', ["./public/breadthFirstSearch.py", req.body.starting_url, req.body.crawl_limit, req.body.keywordInput]);
 	//if there is an error, tell me
 	console.log(pythonProcess.stderr.toString());
+	//first thought this was an asyncronous issue which is why these are in here, will clean up once this is officially ruled out
 	//console.log('first sleep call');
 	//sleep.sleep(1);
 	res.cookie('graph_session', pythonProcess.stdout.toString());
-	//verify stdout to see what is being fed to the cookie 
 	//console.log('second sleep call, finished populating cookie');
-	sleep.sleep(1);
-	console.log(pythonProcess.stdout.toString());
+	//sleep.sleep(1);
+	
+	//verify the data fed to the cookie
+	//console.log(pythonProcess.stdout.toString());
 	//console.log('third sleep, about to render page');
 	//sleep.sleep(1);
 	res.render('crawler');
