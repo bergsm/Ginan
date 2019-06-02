@@ -39,10 +39,21 @@ var simulation = d3.forceSimulation()
 
 //If the cookie exists load the graph
 if ($.cookie('graph_session')) {
+    //write data from file to local storage
+    localStorage.setItem('graphFile.json');
+
+    var retrieved = localStorage.getItem('graphFile.json');
     //parse json from cookie
-    graphjson = JSON.parse($.cookie('graph_session'));
+    //graphjson = JSON.parse($.cookie('graph_session'));
     // Send the parsed json data to the graph update function
-    update(graphjson.links, graphjson.nodes);
+    //update(graphjson.links, graphjson.nodes);
+
+    // Parse nodes and links from json file
+    d3.json("graphFile.json", function (json) {
+        force
+            .nodes(json.nodes)
+            .links(json.links)
+            .start();
 }
 else {
     console.log("No Cookie found")
