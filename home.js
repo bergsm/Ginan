@@ -1,12 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 const spawn = require("child_process").spawnSync;
 
-app.use(cookieParser());
+//app.use(cookieParser());
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
