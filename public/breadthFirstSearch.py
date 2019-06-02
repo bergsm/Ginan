@@ -9,11 +9,13 @@ import urllib
 from bs4 import BeautifulSoup
 from urlparse import urljoin
 from itertools import cycle
+import Cookie
 
 #sys.stdout = open('log','w')
 
 startingURL = sys.argv[1]
 depth = int(sys.argv[2])
+c = Cookie.SimpleCookie()
 
 #set the keyword if the user input one, set to a dummy value if they didn't
 keyword = sys.argv[3]
@@ -132,6 +134,10 @@ def breadthFirstSearch(startingURL, depth, keyword):
     		#print goes to stdout to populate the cookie
     		#print parentString
 
+		#feed the data to the cookie
+    		c['graph_session'] = parentString
+    		#print c	#for debugging, did the data get added to graph_session
+		
     		#clean this up later if needed, this is writing to graphFile.json
     		writeToFile(parentString)
                 exit(0)
@@ -182,6 +188,10 @@ def breadthFirstSearch(startingURL, depth, keyword):
     #print goes to stdout to populate the cookie
     #print parentString
     
+    #feed the data to the cookie
+    c['graph_session'] = parentString
+    #print c	#for debugging, did the data get added to graph_session
+
     #clean this up later if needed, this is writing to graphFile.json
     writeToFile(parentString)
 breadthFirstSearch(startingURL, depth, keyword)
