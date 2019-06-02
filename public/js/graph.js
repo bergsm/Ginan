@@ -35,7 +35,7 @@ var simulation = d3.forceSimulation()
 //$.cookie('graph_session', graphtext);
 
 // TEST JSON data is good
-//console.log($.cookie('graph_session'));
+console.log($.cookie('graph_session'));
 
 //If the cookie exists load the graph
 if ($.cookie('graph_session')) {

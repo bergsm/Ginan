@@ -2,12 +2,13 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var cookieParser = require('cookie-parser'); //had to install this module separately. NPM cookie-parser docs: https://expressjs.com/en/resources/middleware/cookie-parser.html
-app.use(cookieParser());
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var fs = require('fs'); //this is for reading from a file
+var sleep = require('sleep');
 
 const spawn = require("child_process").spawnSync;
 
+app.use(cookieParser());
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,18 +56,29 @@ app.post('/test-page', function (req, res) {
     console.log(req.body);
     //res.send(req.body);
     if (req.body.search_type == 'DFS') {
-        const pythonProcess = spawn('python',["./public/DFT.py", req.body.starting_url, req.body.crawl_limit]);
+        const pythonProcess = spawn('python',["./public/DFT.py", req.body.starting_url, req.body.crawl_limit, req.body.keywordInput]);
         // I adjusted my script so irrelevant statements print to stderr and the json prints to stdout
         // so this line prints status updates to the console.
         console.log(pythonProcess.stderr.toString());
         // These lines should and sometimes? print the data to the cookie.
         //res.cookie('graph_session', pythonProcess.stdout.toString());
         //res.cookie('test2', pythonProcess.stdout.toString());
-        res.cookie('test3', pythonProcess.stdout.toString());
+        res.cookie('graph_session', pythonProcess.stdout.toString());
         res.render('crawler');
     }
     else {
 	const pythonProcess = spawn('python', ["./public/breadthFirstSearch.py", req.body.starting_url, req.body.crawl_limit, req.body.keywordInput]);
+	//if there is an error, tell me
+	console.log(pythonProcess.stderr.toString());
+	//console.log('first sleep call');
+	//sleep.sleep(1);
+	res.cookie('graph_session', pythonProcess.stdout.toString());
+	//verify stdout to see what is being fed to the cookie 
+	//console.log('second sleep call, finished populating cookie');
+	sleep.sleep(1);
+	console.log(pythonProcess.stdout.toString());
+	//console.log('third sleep, about to render page');
+	//sleep.sleep(1);
 	res.render('crawler');
     }
 });

@@ -11,7 +11,7 @@ from urlparse import urljoin
 from itertools import cycle
 import Cookie
 
-sys.stdout = open('log','w')
+#sys.stdout = open('log','w')
 
 startingURL = sys.argv[1]
 depth = int(sys.argv[2])
@@ -20,7 +20,7 @@ c = Cookie.SimpleCookie()
 #set the keyword if the user input one, set to a dummy value if they didn't
 keyword = sys.argv[3]
 if keyword is '':
-	keyword = 'aaaaaa'
+	keyword = "aaaaaa"
 
 #parse the URL
 html = urllib.urlopen(startingURL).read()
@@ -37,7 +37,7 @@ unvisitedURLs.append(startingURL)
 # Args: urls in order from DFS
 # Returns: None
 def writeToFile(urls):
-    with open('./public/graph_session', 'w+') as f:
+    with open("./public/graphFile.json", 'w+') as f:
         f.write(urls)
         #for counter, url in enumerate(urls):
         #    f.write('\n    {\n      "name\": \"URL\",\n      "label\": \"' + url + '\",\n       "id\":' +  str(counter+1) + '\n    }')
@@ -52,11 +52,12 @@ def writeToFile(urls):
 
 
 def breadthFirstSearch(startingURL, depth, keyword):
+    #initialize the counters and the start of each string
     counter = 1
-    neighborCounter = 1
+    neighborCounter = 2
     anotherCounter = 2
     parentString = '{"nodes": ['
-    neighborString = '{"links": ['
+    neighborString = '"links": ['
     observedURLs = []
     test = {}
     #some debugging checks, did everything make it into the data structure and what is the starting URL
@@ -66,42 +67,39 @@ def breadthFirstSearch(startingURL, depth, keyword):
     while len(unvisitedURLs) != 0:
 	
         #get the first URL in the list
-        discovered = unvisitedURLs.pop(0)
-	unvisited = discovered.encode('ascii')
-	print type(unvisited)
-	print unvisited, "\n"
+        unvisited = unvisitedURLs.pop(0)
+	#debug statement to verify the popped URL
+	#sys.stderr.write(unvisited)
+
+	#append the URL and add it to the parent string
 	observedURLs.append(unvisited) 
 	nextParentString = ('{"name": "URL", "label": \"' + unvisited + '\", "id": ' + str(counter) + '}, ')
 	parentString +=  nextParentString
 	#need to get full URL rather than the relative path of every link on the page and add them to the unvisited list. Source for urljoin which 
 	#gets the absolute path: https://stackoverflow.com/questions/44001007/scrape-the-absolute-url-instead-of-a-relative-path-in-python
 	for links in soup.find_all('a',):
-		#listOfNeighbors = []
 		#print "entered the loop looking for links"
 		absoluteURL = urljoin(unvisited, links.get('href'))
 
 		#if the URL is not already in the unvisted list, add it
 		if absoluteURL not in unvisitedURLs:
-			#observedURLs.append(absoluteURL)
 			unvisitedURLs.append(absoluteURL)
+			#add the information to the string of nodes
 			nextParentString = ('{"name": "URL", "label": \"' + absoluteURL + '\", "id": ' + str(anotherCounter) + '}, ')
 			parentString += nextParentString
 			nextNeighborString = ('{"source": \"' + str(counter) + '", "target": \"' + str(neighborCounter) + '\", "type": "Links_To"}, ')
 			neighborString += nextNeighborString
+			#increment the counters
 			neighborCounter += 1
 			anotherCounter += 1
+			#temporary to determine if the size of the json data is causing cookie issues
+			if len(unvisitedURLs) > 10:
+				break
 			#listOfNeighbors.append(absoluteURL)
 			#print "appended a new URL"
 	#observedURLs.append(listOfNeighbors)
 	#add the parsed URL to the observed list
 		#observedURLs.append(unvisited)
-	#test = {}
-	#source for zip and cycle: https://stackoverflow.com/questions/19686533/how-to-zip-two-differently-sized-lists
-	#test = (zip(cycle(observedURLs), unvisitedURLs))
-		#for keys, value in zip(observedURLs, unvisitedURLs):
-		#	l = test.get(keys, [])
-		#	l.append(value)
-		#	test[keys] = l
 
 	#look to see if the keyword is in the URL
 	if keyword in unvisited:
@@ -119,8 +117,27 @@ def breadthFirstSearch(startingURL, depth, keyword):
                 for y in unvisitedURLs:
                 	print y
 		'''
-                #writeToFile(observedURLs)
+		#trim the last comma and add a closing square bracket for json formatting
+    		parentString = parentString[:-2]
+    		parentString += "],"
+    		#append the neighbor nodes string to the parent node string
+    		parentString += neighborString
+    		#add a closing bracket for json formatting
+    		parentString = parentString[:-2]
+    		parentString += "]}\n"
+
+    		#debug, does the final string look correct
+    		#print parentString
+
+    		#debug, are we getting proper stderr communication
+    		sys.stderr.write("hi from stderr")
+    		#print goes to stdout to populate the cookie
+    		print parentString
+
+    		#clean this up later if needed, this is writing to graphFile.json
+    		writeToFile(parentString)
                 exit(0)
+
 	#this will run indefinitely unless we add a limit. The limit is the number of traversed URLs determined by the user's input for depth
 	if len(observedURLs) == depth:
 		break
@@ -145,34 +162,28 @@ def breadthFirstSearch(startingURL, depth, keyword):
 	if neighbors not in listOfNeighbors:
         	listOfNeighbors.append(neighbors)
        		test[parent] = listOfNeighbors
-   
-    #counter = 0
-    #for parentNode in observedURLs:
-    	#print parentNode
-	#print ('\n    {\n      "name\": \"URL\",\n      "Label\": \"' + parentNode + '\",\n       "id\":' +  (counter + 1) + '\n    }')
-        #if  counter < len(parentNode)-1:
-        #	print (',')
-	#counter += 1
-    #for neighboringNode in test:
-	#print test[neighboringNode]
-
+    
     #debug, what are the unvisited URLs
     #for z in unvisitedURLs:
 	#print z
    
-    #print the appended discovered URLs
-    #for a in test:
-	#print "\n"
-	#writeToFile(observedURLs, test[a])
-    parentString += neighborString
+    #trim the last comma and add a closing square bracket for json formatting
     parentString = parentString[:-2]
-    parentString += ']}'
+    parentString += "],"
+    #append the neighbor nodes string to the parent node string
+    parentString += neighborString
+    #add a closing bracket for json formatting
+    parentString = parentString[:-2]
+    parentString += "]}\n"
+
+    #debug, does the final string look correct
     #print parentString
-    graph_session = parentString
-    c['graph_session'] = parentString
-    #c.load(graph_session)
+    
+    #debug, are we getting proper stderr communication
+    sys.stderr.write("hi from stderr")
+    #print goes to stdout to populate the cookie
+    print parentString
+    
+    #clean this up later if needed, this is writing to graphFile.json
     writeToFile(parentString)
-    #writeToFile(observedURLs, test)
-    #print c.js_output()
-    return c
 breadthFirstSearch(startingURL, depth, keyword)
