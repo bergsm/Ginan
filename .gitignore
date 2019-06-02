@@ -5,3 +5,4 @@ DFT.json
 env
 *.bak
 *.pyc
+.vs
