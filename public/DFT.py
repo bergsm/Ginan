@@ -94,7 +94,7 @@ def DFT(url, depth, urlChain, links, keyword):
         #write urlChain to file for graph and exit
         sys.stderr.write("Depth reached, keyword found, no links on page, or url format incorrect. Generating results..\n")
         writeToFile(urlChain, outputFP)
-        writeToCookie(urlChain)
+        #writeToCookie(urlChain)
         return
 
     #choose one link at random
