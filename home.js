@@ -21,6 +21,7 @@ app.set('port', 3030);
 //NOTE: very heavily relied upon as written for SO answer
 // set a cookie
 app.use(function (req, res, next) {
+// It looks like this was used to read the cookie contents from a file, which is sort of what we were doing previously when rendering d3 with file contents. I don't know enough about node.js to know if the app.use funciton is integral to cookie creation/writing, but I presume we will need this to load the user's previous cookie once they are working?
 //   // check if client sent cookie
 //     var cookie = req.cookies.graph_session;
 //     if (cookie === undefined)
@@ -58,7 +59,7 @@ app.post('/test-page', function (req, res) {
     if (req.body.search_type == 'DFS') {
         const pythonProcess = spawn('python',["./public/DFT.py", req.body.starting_url, req.body.crawl_limit, req.body.keywordInput]);
         // I adjusted my script so irrelevant statements print to stderr and the json prints to stdout
-        // so this line prints status updates to the console.
+        // so this line prints script status updates to the console.
         console.log(pythonProcess.stderr.toString());
         // These lines should and sometimes? print the data to the cookie.
         //res.cookie('graph_session', pythonProcess.stdout.toString());
