@@ -37,7 +37,9 @@ app.post('/test-page', function (req, res) {
     }
     else {
 	const pythonProcess = spawn('python', ["./public/breadthFirstSearch.py", req.body.starting_url, req.body.crawl_limit, req.body.keywordInput], {stdio: 'pipe', encoding: 'utf-8'});
-    console.log(pythonProcess.stdout);
+    	res.cookie('graph_session');
+	console.log(pythonProcess.stderr.toString());
+	//console.log(pythonProcess.stdout.toString());
 	res.render('crawler');
     }
 });

@@ -135,7 +135,7 @@ def breadthFirstSearch(startingURL, depth, keyword):
     		#print parentString
 
 		#feed the data to the cookie
-    		c['graph_session'] = keyword
+    		#c['graph_session'] = keyword
     		#print c	#for debugging, did the data get added to graph_session
 		
     		#Write to graphFile.json
@@ -189,7 +189,7 @@ def breadthFirstSearch(startingURL, depth, keyword):
     #print parentString
     
     #feed the data to the cookie
-    c['graph_session']
+    #c['graph_session']
     #print c	
 
     #Write to graphFile.json
