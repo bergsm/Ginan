@@ -53,12 +53,10 @@ if ($.cookie('graph_session')) {
     //update(graphjson.links, graphjson.nodes);
 
     // Parse nodes and links from json file
-    d3.json("graphFile.json", function (json) {
-        force
-            .nodes(json.nodes)
-            .links(json.links)
-            .start();
-    }
+    d3.json("graphFile.json", function (error, graph) {
+        if (error) throw error;
+        update(graph.links, graph.nodes);
+    })
 }
 else {
     console.log("No Cookie found")
