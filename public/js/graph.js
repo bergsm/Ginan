@@ -64,6 +64,7 @@ else {
     console.log("No Cookie found")
 }
 
+
 function update(links, nodes) {
     link = svg.selectAll(".link")
         .data(links)
