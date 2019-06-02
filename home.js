@@ -15,6 +15,9 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', 50500);
 
+app.use(function (req, res, next) {
+    next();
+});
 
 app.get('/', function(req,res){
   res.render('crawler');
@@ -24,10 +27,11 @@ app.post('/test-page', function (req, res) {
     console.log(req.body);
     //res.send(req.body);
     if (req.body.search_type == 'DFS') {
+        res.cookie('graph_session', req.body.keywordInput);
+        res.cookie('test', req.body.keywordInput);
         const pythonProcess = spawn('python',["./public/DFT.py", req.body.starting_url, req.body.crawl_limit, req.body.keywordInput]);
         console.log(pythonProcess.stderr.toString());
         //console.log(pythonProcess.stdout.toString());
-        res.cookie('graph_session', req.body.keywordInput);
         res.render('crawler');
     }
     else {
