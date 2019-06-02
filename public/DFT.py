@@ -1,4 +1,5 @@
 import requests
+import Cookie
 import sys
 import random
 from bs4 import BeautifulSoup
@@ -6,13 +7,11 @@ from urlparse import urljoin
 
 outputFP = './public/graphFile.json'
 
-
 # Function to write urls from DFS to json file for
-# neo4j
-# Args: urls in order from DFS
+# d3
+# Args: urls in order from DFS, filePath to save
 # Returns: None
 def writeToFile(urls, filePath):
-    #with open('./public/graphFile.json', 'w+') as f:
     with open(filePath, 'w+') as f:
         f.write('{\n  \"nodes\": [')
         for counter, url in enumerate(urls):
@@ -27,31 +26,49 @@ def writeToFile(urls, filePath):
         f.write('\n  ]\n}')
 
 
+# Function to write urls from DFS to json cookie for d3
+# Args: urls in order from DFS, cookie name
+# Returns: None
+def writeToCookie(urls):
+    jsonString = ''
+    jsonString += '{\n  \"nodes\": ['
+    for counter, url in enumerate(urls):
+        jsonString += '\n    {\n      "name\": \"URL\",\n      "label\": \"' + url + '\",\n       "id\":' +  str(counter+1) + '\n    }'
+        if counter < len(urls)-1:
+            jsonString += ','
+    jsonString += '\n  ],\n  \"links\": ['
+    for i in range(1, len(urls)):
+        jsonString += '\n    {\n      \"source\": ' + str(i) + ',\n      \"target\": ' + str(i+1) + ',\n      \"type\": \"Links_To\"\n    }'
+        if i < len(urls)-1:
+            jsonString += ','
+    jsonString += '\n  ]\n}'
+    print(jsonString)
+
 
 # Function to parse page for all links
 # Args: url for page in question, list of links from previous page
 # Returns: array/list of links
 def parsePage(url, links):
     #fetch page
-    print("Fetching page..")
+    sys.stderr.write("Fetching page..\n")
     try:
         r = requests.get(url)
         page = r.content
-        print("Parsing..")
+        sys.stderr.write("Parsing..\n")
         soup = BeautifulSoup(page, "html.parser")
         if not soup.body:
-            raise Exception("Page not parsed")
+            raise Exception("Page not parsed\n")
         links = []
         for link in soup.find_all('a'):
             links.append(urljoin(url, link.get('href')))
     except Exception as e:
         #pick another link if available
-        print("Error: " + str(e))
+        sys.stderr.write("Error: " + str(e))
         if len(links) < 1:
-            print("No other links available.")
+            sys.stderr.write("No other links available.\n")
             return []
         else:
-            print("Choosing a different link..")
+            sys.stderr.write("Choosing a different link..\n")
             randNum = random.randint(0, len(links)-1)
             url = links[randNum]
             del links[randNum]
@@ -75,16 +92,17 @@ def DFT(url, depth, urlChain, links, keyword):
     #base case
     if depth == 0 or links == [] or (any(keyword in link for link in urlChain) and keyword):
         #write urlChain to file for graph and exit
-        print("Depth reached, keyword found, no links on page, or url format incorrect. Generating results..")
+        sys.stderr.write("Depth reached, keyword found, no links on page, or url format incorrect. Generating results..\n")
         writeToFile(urlChain, outputFP)
+        #writeToCookie(urlChain)
         return
 
     #choose one link at random
-    print("Choosing link at random..")
+    sys.stderr.write("Choosing link at random..\n")
     randNum = random.randint(0, len(links)-1)
     url = links[randNum]
     del links[randNum]
-    print("Random url is: " + url)
+    sys.stderr.write("Random url is: " + url + "\n")
 
     #decrement and recurse
     depth -= 1
@@ -93,7 +111,7 @@ def DFT(url, depth, urlChain, links, keyword):
 def main():
     #Take starting url as argument?
     if len(sys.argv) < 3:
-        print("No url and/or depth argument provided")
+        sys.stderr.write("No url and/or depth argument provided\n")
         exit(1)
 
     #Initialize list of variables
@@ -103,7 +121,7 @@ def main():
     urlChain = []
     links = []
 
-    print("keyword is: " + keyword)
+    sys.stderr.write("keyword is: " + keyword + "\n")
 
     DFT(initUrl, depth, urlChain, links, keyword)
 
