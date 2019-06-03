@@ -27,4 +27,13 @@ $('#submitButton').click(function () {
             console.log('process error');
         },
     });
+    // remove graph data from local storge if there is any for new graph
+    if (localStorage.getItem("localGraph") !== null) {
+        console.log("Local Storage contains old graph data.  Removing...");
+        localStorage.removeItem("localGraph");
+    }
+    else {
+        console.log("No graph data in local storage found.");
+
+    }
 });
