@@ -48,13 +48,15 @@ if ($.cookie('graph_session')) {
             type: "GET",
             url: "graphFile.json",
             dataType: "json",
+            success: function (jsonString) {
+                console.log(JSON.stringify(jsonString))
         });
         console.log("jsonObject-Before" + jsonObject);
-        jsonObject = JSON.stringify(jsonObject);
+        //jsonString = JSON.stringify(jsonObject);
 
-        console.log("jsonObject-After" + jsonObject);
+        console.log("jsonObject-After" + jsonString);
         //write data from file to local storage
-        localStorage.setItem('graphFile', jsonObject);
+        localStorage.setItem('graphFile', jsonString);
     }
 
     // get json file from local storage to a variable
