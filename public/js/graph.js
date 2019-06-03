@@ -43,7 +43,7 @@ if ($.cookie('graph_session')) {
     if (localStorage.getItem('graphFile') === null) {
         // read json from file into a variable
         var reader = new FileReader();
-        var jsonstring = JSON.stringify("graphFile.json")
+        var jsonstring = JSON.stringify('graphFile.json')
         console.log("jsonstring: " + jsonstring);
         //var grphjson = reader.readAsText("JSON.stringify(graphFile.json)");
 
@@ -53,7 +53,7 @@ if ($.cookie('graph_session')) {
 
     // get json file from local storage to a variable
     var retrieved = localStorage.getItem('graphFile');
-    consloe.log("retrieved: " + retrieved);
+    console.log("retrieved: " + retrieved);
     //parse json from cookie
     //graphjson = JSON.parse($.cookie('graph_session'));
     // Send the parsed json data to the graph update function
