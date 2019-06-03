@@ -67,14 +67,14 @@ if ($.cookie('graph_session')) {
             // Parse nodes and links from json file
             graphjson = JSON.parse(retrieved);
             // Send the parsed json data to the graph update function
-            update(retrieved.links, retrieved.nodes);
+            update(graphjson.links, graphjson.nodes);
         });
     }
     else {
         var retrieved = localStorage.getItem("localGraph");
         console.log("Else retrieved: " + retrieved);
         // Parse nodes and links from json file
-        graphjson = JSON.parse(graphjson);
+        graphjson = JSON.parse(retrieved);
         // Send the parsed json data to the graph update function
         update(graphjson.links, graphjson.nodes);
     }
