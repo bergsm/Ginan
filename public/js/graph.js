@@ -40,7 +40,7 @@ var simulation = d3.forceSimulation()
 //If the cookie exists load the graph
 if ($.cookie('graph_session')) {
 
-    if (localStorage.getItem("graphFile") === null) {
+    if (localStorage.getItem("localGraph") === null) {
         // read json from file into a variable
         
         //var jsonObject = $.getJSON("graphFile.json");
@@ -57,22 +57,21 @@ if ($.cookie('graph_session')) {
             jsonobj = JSON.stringify(a1);
             console.log("jsonObject-After" + jsonobj);
             //write data from file to local storage
-            localStorage.setItem("graphFile", jsonobj);
+            localStorage.setItem("localGraph", jsonobj);
+            // get json file from local storage to a variable
+            var retrieved = localStorage.getItem("localGraph");
+            console.log("retrieved: " + retrieved);
+            //parse json from cookie
+            //graphjson = JSON.parse($.cookie('graph_session'));
+            // Send the parsed json data to the graph update function
+            //update(graphjson.links, graphjson.nodes);
+
+            // Parse nodes and links from json file
+            graphjson = JSON.parse(retrieved);
+            // Send the parsed json data to the graph update function
+            update(retrieved.links, retrieved.nodes);
         });
     }
-
-    // get json file from local storage to a variable
-    var retrieved = localStorage.getItem("graphFile");
-    console.log("retrieved: " + retrieved);
-    //parse json from cookie
-    //graphjson = JSON.parse($.cookie('graph_session'));
-    // Send the parsed json data to the graph update function
-    //update(graphjson.links, graphjson.nodes);
-
-    // Parse nodes and links from json file
-    graphjson = JSON.parse(retrieved);
-    // Send the parsed json data to the graph update function
-    update(retrieved.links, retrieved.nodes);
 }
 else {
     console.log("No Cookie found")
