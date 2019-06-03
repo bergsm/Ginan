@@ -19,6 +19,11 @@ $('#submitButton').click(function () {
         },
 
         success: function (data) {
+            // remove graph data from local storge if there is any for new graph
+            if (localStorage.getItem("localGraph") !== null) {
+                console.log("Local Storage contains old graph data.  Removing...");
+                localStorage.removeItem("localGraph");
+            }
             console.log(data);
             console.log('process sucess');
         },
