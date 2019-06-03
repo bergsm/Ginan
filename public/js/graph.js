@@ -43,7 +43,12 @@ if ($.cookie('graph_session')) {
     if (localStorage.getItem('graphFile') === null) {
         // read json from file into a variable
         
-        var jsonObject = $.getJSON("graphFile.json");
+        //var jsonObject = $.getJSON("graphFile.json");
+        var jsonObject = $.ajax({
+            type: "GET",
+            url: "https://ziptasticapi.com/28403",
+            dataType: "json",
+        });
         console.log("jsonObject-Before" + jsonObject);
         jsonObject = JSON.stringify(jsonObject);
 
