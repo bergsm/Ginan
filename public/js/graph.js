@@ -45,16 +45,13 @@ if ($.cookie('graph_session')) {
         
         //var jsonObject = $.getJSON("graphFile.json");
         function ajax1() {
-            return $.ajax({
+           var json0bj = $.ajax({
                 type: "GET",
                 url: "graphFile.json",
                 dataType: "json",
-                success: function (jsonobj) {
-                    console.log(JSON.stringify(jsonobj))
-                }
             });
             //console.log("jsonObject-Before" + jsonObject);
-            //jsonobj = JSON.stringify(jsonObject);
+            jsonobj = JSON.stringify(json0bj);
         }
         $.when(ajax1()).done(function (a1) {
             console.log("jsonObject-After" + jsonobj);
