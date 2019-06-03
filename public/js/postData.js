@@ -24,6 +24,10 @@ $('#submitButton').click(function () {
                 console.log("Local Storage contains old graph data.  Removing...");
                 localStorage.removeItem("localGraph");
             }
+            else {
+                console.log("No graph data in local storage found.");
+
+            }
             console.log(data);
             console.log('process sucess');
         },
