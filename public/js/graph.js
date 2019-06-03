@@ -53,11 +53,11 @@ if ($.cookie('graph_session')) {
             }
         });
         console.log("jsonObject-Before" + jsonObject);
-        //jsonString = JSON.stringify(jsonObject);
+        jsonobj = JSON.stringify(jsonObject);
 
-        console.log("jsonObject-After" + jsonString);
+        console.log("jsonObject-After" + jsonobj);
         //write data from file to local storage
-        localStorage.setItem('graphFile', jsonString);
+        localStorage.setItem('graphFile', jsonobj);
     }
 
     // get json file from local storage to a variable
