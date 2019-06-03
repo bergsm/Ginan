@@ -42,7 +42,8 @@ if ($.cookie('graph_session')) {
 
     if (localStorage.getItem('graphFile') === null) {
         // read json from file into a variable
-        var grphjson = FileReader("graphFile.json");
+        var reader = new FileReader();
+        var grphjson = reader("graphFile.json");
 
         //write data from file to local storage
         localStorage.setItem('graphFile', grphjson);
