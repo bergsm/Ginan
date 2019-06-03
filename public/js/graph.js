@@ -41,8 +41,11 @@ var simulation = d3.forceSimulation()
 if ($.cookie('graph_session')) {
 
     if (localStorage.getItem('graphFile') === null) {
+        // read json from file into a variable
+        var grphjson = FileReader("graphFile.json");
+
         //write data from file to local storage
-        localStorage.setItem('graphFile', graphFile.json);
+        localStorage.setItem('graphFile', grphjson);
     }
 
     // get json file from local storage to a variable
