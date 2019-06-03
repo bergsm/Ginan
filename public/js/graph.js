@@ -43,10 +43,11 @@ if ($.cookie('graph_session')) {
     if (localStorage.getItem('graphFile') === null) {
         // read json from file into a variable
         var reader = new FileReader();
-        var grphjson = reader.readAsText("graphFile.json");
+        var jsonstring = JSON.stringify(graphFile.json)
+        //var grphjson = reader.readAsText("JSON.stringify(graphFile.json)");
 
         //write data from file to local storage
-        localStorage.setItem('graphFile', grphjson);
+        localStorage.setItem('graphFile', jsonstring);
     }
 
     // get json file from local storage to a variable
@@ -57,7 +58,7 @@ if ($.cookie('graph_session')) {
     //update(graphjson.links, graphjson.nodes);
 
     // Parse nodes and links from json file
-    d3.json("graphFile.json", function (error, graph) {
+    d3.json(retrieved, function (error, graph) {
         if (error) throw error;
         update(graph.links, graph.nodes);
     })
