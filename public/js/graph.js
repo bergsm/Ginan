@@ -50,6 +50,7 @@ if ($.cookie('graph_session')) {
             dataType: "json",
             success: function (jsonString) {
                 console.log(JSON.stringify(jsonString))
+            }
         });
         console.log("jsonObject-Before" + jsonObject);
         //jsonString = JSON.stringify(jsonObject);
