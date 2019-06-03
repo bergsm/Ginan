@@ -78,7 +78,6 @@ if ($.cookie('graph_session')) {
         // Send the parsed json data to the graph update function
         update(retrieved.links, retrieved.nodes);
     }
-    }
 }
 else {
     console.log("No Cookie found")
