@@ -56,21 +56,19 @@ if ($.cookie('graph_session')) {
         $.when(ajax1()).done(function (a1) {
             jsonobj = JSON.stringify(a1);
             console.log("jsonObject-After" + jsonobj);
+
             //write data from file to local storage
             localStorage.setItem("localGraph", jsonobj);
+
             // get json file from local storage to a variable
             var retrieved = localStorage.getItem("localGraph");
             console.log("retrieved: " + retrieved);
-            //parse json from cookie
-            //graphjson = JSON.parse($.cookie('graph_session'));
-            // Send the parsed json data to the graph update function
-            //update(graphjson.links, graphjson.nodes);
-
+           
             // Parse nodes and links from json file
             graphjson = JSON.parse(retrieved);
-            // Send the parsed json data to the graph update function
-            update(retrieved.links, retrieved.nodes);
         });
+        // Send the parsed json data to the graph update function after waiting a few seconds for the AJAX
+        setTimeout(update(retrieved.links, retrieved.nodes), 5000);
     }
 }
 else {
