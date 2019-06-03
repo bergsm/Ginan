@@ -66,9 +66,9 @@ if ($.cookie('graph_session')) {
            
             // Parse nodes and links from json file
             graphjson = JSON.parse(retrieved);
+            // Send the parsed json data to the graph update function
+            update(retrieved.links, retrieved.nodes);
         });
-        // Send the parsed json data to the graph update function after waiting a few seconds for the AJAX
-        setTimeout(update(retrieved.links, retrieved.nodes), 5000);
     }
 }
 else {
