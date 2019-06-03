@@ -42,9 +42,10 @@ if ($.cookie('graph_session')) {
 
     if (localStorage.getItem('graphFile') === null) {
         // read json from file into a variable
-        var fs = require("fs");
-        var fileContents = fs.readFileSync("graphFile.json");
-        var jsonObject = JSON.parse(fileContents);
+        let fileContents = JSON.stringify(graphFile.json);
+        const jsonObject = new Blob([fileContents], { type: "application/json" });
+
+        
 
         //write data from file to local storage
         localStorage.setItem('graphFile', jsonObject);
