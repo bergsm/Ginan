@@ -135,10 +135,10 @@ def breadthFirstSearch(startingURL, depth, keyword):
     		#print parentString
 
 		#feed the data to the cookie
-    		c['graph_session'] = parentString
+    		#c['graph_session'] = keyword
     		#print c	#for debugging, did the data get added to graph_session
 		
-    		#clean this up later if needed, this is writing to graphFile.json
+    		#Write to graphFile.json
     		writeToFile(parentString)
                 exit(0)
 
@@ -180,7 +180,7 @@ def breadthFirstSearch(startingURL, depth, keyword):
     parentString = parentString[:-2]
     parentString += "]}\n"
 
-    #debug, does the final string look correct
+    #debugging, does the final string look correct
     #print parentString
     
     #debug, are we getting proper stderr communication
@@ -189,9 +189,9 @@ def breadthFirstSearch(startingURL, depth, keyword):
     #print parentString
     
     #feed the data to the cookie
-    c['graph_session'] = parentString
-    #print c	#for debugging, did the data get added to graph_session
+    #c['graph_session']
+    #print c	
 
-    #clean this up later if needed, this is writing to graphFile.json
+    #Write to graphFile.json
     writeToFile(parentString)
 breadthFirstSearch(startingURL, depth, keyword)

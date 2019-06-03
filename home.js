@@ -1,10 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+var cookieParser = require('cookie-parser');
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 const spawn = require("child_process").spawnSync;
 
+app.use(cookieParser());
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,6 +15,9 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', 3030);
 
+app.use(function (req, res, next) {
+    next();
+});
 
 app.get('/', function(req,res){
   res.render('crawler');
@@ -22,6 +27,9 @@ app.post('/test-page', function (req, res) {
     console.log(req.body);
     //res.send(req.body);
     if (req.body.search_type == 'DFS') {
+        res.cookie('graph_session');
+        //res.cookie('test', req.body.keywordInput, {overwrite: true});
+        //res.cookie('test2', 'dummy');
         const pythonProcess = spawn('python',["./public/DFT.py", req.body.starting_url, req.body.crawl_limit, req.body.keywordInput]);
         console.log(pythonProcess.stderr.toString());
         //console.log(pythonProcess.stdout.toString());
@@ -29,7 +37,9 @@ app.post('/test-page', function (req, res) {
     }
     else {
 	const pythonProcess = spawn('python', ["./public/breadthFirstSearch.py", req.body.starting_url, req.body.crawl_limit, req.body.keywordInput], {stdio: 'pipe', encoding: 'utf-8'});
-    console.log(pythonProcess.stdout);
+    	res.cookie('graph_session');
+	console.log(pythonProcess.stderr.toString());
+	//console.log(pythonProcess.stdout.toString()); //print to console
 	res.render('crawler');
     }
 });

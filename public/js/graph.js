@@ -40,24 +40,43 @@ var simulation = d3.forceSimulation()
 //If the cookie exists load the graph
 if ($.cookie('graph_session')) {
 
-    if (localStorage.getItem('graphFile') === null) {
-        //write data from file to local storage
-        localStorage.setItem('graphFile', graphFile.json);
+    if (localStorage.getItem("localGraph") === null) {
+        // read json from file into a variable
+
+        //var jsonObject = $.getJSON("graphFile.json");
+        function ajax1() {
+            return $.ajax({
+                type: "GET",
+                url: "graphFile.json",
+                dataType: "json",
+            });
+
+
+        }
+        $.when(ajax1()).done(function (a1) {
+            jsonobj = JSON.stringify(a1);
+            console.log("jsonObject-After" + jsonobj);
+
+            //write data from file to local storage
+            localStorage.setItem("localGraph", jsonobj);
+
+            // get json file from local storage to a variable
+            var retrieved = localStorage.getItem("localGraph");
+            console.log("retrieved: " + retrieved);
+
+            // Parse nodes and links from json file
+            graphjson = JSON.parse(retrieved);
+            // Send the parsed json data to the graph update function
+            update(graphjson.links, graphjson.nodes);
+        });
     }
-
-    // get json file from local storage to a variable
-    var retrieved = localStorage.getItem('graphFile', graphFile.json);
-    //parse json from cookie
-    //graphjson = JSON.parse($.cookie('graph_session'));
-    // Send the parsed json data to the graph update function
-    //update(graphjson.links, graphjson.nodes);
-
-    // Parse nodes and links from json file
-    d3.json("graphFile.json", function (json) {
-        force
-            .nodes(json.nodes)
-            .links(json.links)
-            .start();
+    else {
+        var retrieved = localStorage.getItem("localGraph");
+        console.log("Else retrieved: " + retrieved);
+        // Parse nodes and links from json file
+        graphjson = JSON.parse(retrieved);
+        // Send the parsed json data to the graph update function
+        update(graphjson.links, graphjson.nodes);
     }
 }
 else {
