@@ -46,7 +46,7 @@ if ($.cookie('graph_session')) {
         //var jsonObject = $.getJSON("graphFile.json");
         var jsonObject = $.ajax({
             type: "GET",
-            url: "https://ziptasticapi.com/28403",
+            url: "graphFile.json",
             dataType: "json",
         });
         console.log("jsonObject-Before" + jsonObject);
