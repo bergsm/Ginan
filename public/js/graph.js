@@ -42,8 +42,8 @@ if ($.cookie('graph_session')) {
 
     if (localStorage.getItem('graphFile') === null) {
         // read json from file into a variable
-        let fileContents = JSON.stringify(graphFile.json);
-        const jsonObject = new Blob([fileContents], { type: "application/json" });
+        
+        var jsonObject = $.getJSON("graphFile.json");
 
         
 
