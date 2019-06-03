@@ -74,9 +74,9 @@ if ($.cookie('graph_session')) {
         var retrieved = localStorage.getItem("localGraph");
         console.log("Else retrieved: " + retrieved);
         // Parse nodes and links from json file
-        graphjson = JSON.parse(retrieved);
+        graphjson = JSON.parse(graphjson);
         // Send the parsed json data to the graph update function
-        update(retrieved.links, retrieved.nodes);
+        update(graphjson.links, graphjson.nodes);
     }
 }
 else {
