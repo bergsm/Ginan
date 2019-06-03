@@ -55,14 +55,14 @@ if ($.cookie('graph_session')) {
         }
         $.when(ajax1()).done(function (a1) {
             jsonobj = JSON.stringify(a1);
-            console.log("jsonObject-After" + jsonobj);
+            //console.log("jsonObject-After" + jsonobj);
 
             //write data from file to local storage
             localStorage.setItem("localGraph", jsonobj);
 
             // get json file from local storage to a variable
             var retrieved = localStorage.getItem("localGraph");
-            console.log("retrieved: " + retrieved);
+            //console.log("retrieved: " + retrieved);
 
             // Parse nodes and links from json file
             graphjson = JSON.parse(retrieved);
