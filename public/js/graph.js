@@ -56,7 +56,7 @@ if ($.cookie('graph_session')) {
             //console.log("jsonObject-Before" + jsonObject);
             //jsonobj = JSON.stringify(jsonObject);
         }
-        $.when(ajax1()).done(function (a1)) {
+        $.when(ajax1()).done(function (a1) {
             console.log("jsonObject-After" + jsonobj);
             //write data from file to local storage
             localStorage.setItem('graphFile', jsonobj);
