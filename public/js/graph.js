@@ -42,16 +42,16 @@ if ($.cookie('graph_session')) {
 
     if (localStorage.getItem("localGraph") === null) {
         // read json from file into a variable
-        
+
         //var jsonObject = $.getJSON("graphFile.json");
         function ajax1() {
-           return $.ajax({
+            return $.ajax({
                 type: "GET",
                 url: "graphFile.json",
                 dataType: "json",
             });
-            
-            
+
+
         }
         $.when(ajax1()).done(function (a1) {
             jsonobj = JSON.stringify(a1);
@@ -63,12 +63,21 @@ if ($.cookie('graph_session')) {
             // get json file from local storage to a variable
             var retrieved = localStorage.getItem("localGraph");
             console.log("retrieved: " + retrieved);
-           
+
             // Parse nodes and links from json file
             graphjson = JSON.parse(retrieved);
             // Send the parsed json data to the graph update function
             update(retrieved.links, retrieved.nodes);
         });
+    }
+    else {
+        var retrieved = localStorage.getItem("localGraph");
+        console.log("Else retrieved: " + retrieved);
+        // Parse nodes and links from json file
+        graphjson = JSON.parse(retrieved);
+        // Send the parsed json data to the graph update function
+        update(retrieved.links, retrieved.nodes);
+    }
     }
 }
 else {
