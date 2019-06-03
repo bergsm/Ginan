@@ -51,7 +51,7 @@ if ($.cookie('graph_session')) {
     }
 
     // get json file from local storage to a variable
-    var retrieved = localStorage.getItem('graphFile', graphFile.json);
+    var retrieved = localStorage.getItem('graphFile');
     //parse json from cookie
     //graphjson = JSON.parse($.cookie('graph_session'));
     // Send the parsed json data to the graph update function
