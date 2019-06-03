@@ -45,18 +45,18 @@ if ($.cookie('graph_session')) {
         
         //var jsonObject = $.getJSON("graphFile.json");
         function ajax1() {
-            var jsonObject = $.ajax({
+            return $.ajax({
                 type: "GET",
                 url: "graphFile.json",
                 dataType: "json",
-                success: function (jsonString) {
-                    console.log(JSON.stringify(jsonString))
+                success: function (jsonobj) {
+                    console.log(JSON.stringify(jsonobj))
                 }
             });
             //console.log("jsonObject-Before" + jsonObject);
             //jsonobj = JSON.stringify(jsonObject);
         }
-        $.when(ajax1()).done(function a1) {
+        $.when(ajax1()).done(function (a1)) {
             console.log("jsonObject-After" + jsonobj);
             //write data from file to local storage
             localStorage.setItem('graphFile', jsonobj);
