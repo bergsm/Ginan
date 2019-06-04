@@ -15,6 +15,9 @@ import Cookie
 
 startingURL = sys.argv[1]
 depth = int(sys.argv[2])
+#limit the BFS to a depth of 3, too messy otherwise
+if depth > 3:
+	depth = 3
 c = Cookie.SimpleCookie()
 
 #set the keyword if the user input one, set to a dummy value if they didn't
@@ -30,8 +33,6 @@ soup = BeautifulSoup(html, 'html.parser')
 unvisitedURLs = []
 unvisitedURLs.append(startingURL)
 
-#listOfNeighbors = []
-
 # The following write function was written by Shawn Berg, all credit to him for this
 # Function to write urls from DFS to json file
 # Args: urls in order from DFS
@@ -39,17 +40,6 @@ unvisitedURLs.append(startingURL)
 def writeToFile(urls):
     with open("./public/graphFile.json", 'w+') as f:
         f.write(urls)
-        #for counter, url in enumerate(urls):
-        #    f.write('\n    {\n      "name\": \"URL\",\n      "label\": \"' + url + '\",\n       "id\":' +  str(counter+1) + '\n    }')
-        #    if counter < len(urls)-1:
-        #        f.write(',')
-        #f.write('\n  ],\n  \"links\": [')
-        #f.write(type(nodes))
-            #f.write('\n    {\n      \"source\": ' + urls + ',\n      \"target\": ' + nodes(str(i)) + ',\n      \"type\": \"Links_To\"\n    }')
-        #if i < len(urls)-1:
-        #	f.write(',')
-        #f.write('\n  ]\n}')
-
 
 def breadthFirstSearch(startingURL, depth, keyword):
     #initialize the counters and the start of each string
@@ -59,7 +49,11 @@ def breadthFirstSearch(startingURL, depth, keyword):
     parentString = '{"nodes": ['
     neighborString = '"links": ['
     observedURLs = []
-    test = {}
+    
+    #start the URL string with the starting URL
+    nextParentString = ('{"name": "URL", "label": \"' + startingURL + '\", "id": ' + str(counter) + '}, ')
+    parentString += nextParentString
+
     #some debugging checks, did everything make it into the data structure and what is the starting URL
     #print "How many unvisited URLs? - ", len(unvisitedURLs)
     #print "The starting URL is: " ,startingURL
@@ -73,8 +67,7 @@ def breadthFirstSearch(startingURL, depth, keyword):
 
 	#append the URL and add it to the parent string
 	observedURLs.append(unvisited) 
-	nextParentString = ('{"name": "URL", "label": \"' + unvisited + '\", "id": ' + str(counter) + '}, ')
-	parentString +=  nextParentString
+	
 	#need to get full URL rather than the relative path of every link on the page and add them to the unvisited list. Source for urljoin which 
 	#gets the absolute path: https://stackoverflow.com/questions/44001007/scrape-the-absolute-url-instead-of-a-relative-path-in-python
 	for links in soup.find_all('a',):
@@ -84,6 +77,7 @@ def breadthFirstSearch(startingURL, depth, keyword):
 		#if the URL is not already in the unvisted list, add it
 		if absoluteURL not in unvisitedURLs:
 			unvisitedURLs.append(absoluteURL)
+		
 			#add the information to the string of nodes
 			nextParentString = ('{"name": "URL", "label": \"' + absoluteURL + '\", "id": ' + str(anotherCounter) + '}, ')
 			parentString += nextParentString
@@ -92,14 +86,9 @@ def breadthFirstSearch(startingURL, depth, keyword):
 			#increment the counters
 			neighborCounter += 1
 			anotherCounter += 1
-			#temporary to determine if the size of the json data is causing cookie issues
-			#if len(unvisitedURLs) > 10:
-				#break
-			#listOfNeighbors.append(absoluteURL)
-			#print "appended a new URL"
-	#observedURLs.append(listOfNeighbors)
-	#add the parsed URL to the observed list
-		#observedURLs.append(unvisited)
+			#if we have hit 42 nodes, break out of the function
+			if len(unvisitedURLs) > 42:
+				break
 
 	#look to see if the keyword is in the URL
 	if keyword in unvisited:
@@ -159,17 +148,6 @@ def breadthFirstSearch(startingURL, depth, keyword):
     for y in unvisitedURLs:
 	print y
     '''
-    #source for zip and cycle: https://stackoverflow.com/questions/19686533/how-to-zip-two-differently-sized-lists
-    #https://stackoverflow.com/questions/32418354/convert-two-lists-to-dictionary-with-values-as-list
-    for parent, neighbors in zip(cycle(observedURLs), unvisitedURLs):
-    	listOfNeighbors = test.get(parent, [])
-	if neighbors not in listOfNeighbors:
-        	listOfNeighbors.append(neighbors)
-       		test[parent] = listOfNeighbors
-    
-    #debug, what are the unvisited URLs
-    #for z in unvisitedURLs:
-	#print z
    
     #trim the last comma and add a closing square bracket for json formatting
     parentString = parentString[:-2]
