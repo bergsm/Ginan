@@ -25,11 +25,8 @@ app.get('/', function(req,res){
 
 app.post('/test-page', function (req, res) {
     console.log(req.body);
-    //res.send(req.body);
     if (req.body.search_type == 'DFS') {
         res.cookie('graph_session');
-        //res.cookie('test', req.body.keywordInput, {overwrite: true});
-        //res.cookie('test2', 'dummy');
         const pythonProcess = spawn('python',["./public/DFT.py", req.body.starting_url, req.body.crawl_limit, req.body.keywordInput]);
         console.log(pythonProcess.stderr.toString());
         //console.log(pythonProcess.stdout.toString());
